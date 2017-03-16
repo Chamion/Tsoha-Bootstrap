@@ -2,8 +2,8 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](jemisalo.users.cs.helsinki.fi/HS-bookkeeping)
-* [Linkki dokumentaatiooni](https://github.com/Chamion/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
+* [Linkki sovellukseeni](https://jemisalo.users.cs.helsinki.fi/HS-bookkeeping)
+* [Linkki dokumentaatiooni](/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
