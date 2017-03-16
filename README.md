@@ -2,9 +2,9 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki sovellukseeni](jemisalo.users.cs.helsinki.fi/HS-bookkeeping)
+* [Linkki dokumentaatiooni](https://github.com/Chamion/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+Hearthstone-pelin pelaajille kirjanpitoapuväline, joka auttaa kirjaamaan pelien tuloksia pelatessa ja analysoimaan tuloksia myöhemmin. Lisäksi tuloksia voi kerätä ryhmässä, jolloin kaikki ryhmän jäsenet voivat hyödyntää toistensa dataa.
