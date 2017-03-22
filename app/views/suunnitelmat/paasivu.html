@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <span>Logged in as {username}    </span><button class="btn btn-primary btn-lg">Log out</button>
+  <br><br>
+  <a href="{{base_path}}/kirjaus" class="btn btn-primary btn-lg">Log results</a>
+  <br><br>
+  <a href="{{base_path}}/analyysi" class="btn btn-primary btn-lg">View results</a>
+  <br><br>
+  <a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Manage groups</a>
+{% endblock %}

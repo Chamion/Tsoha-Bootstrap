@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    function tableOff() {
+        var x = document.getElementById('groups_table');
+        x.style.display = 'none';
+    }
+    function tableOn() {
+        var x = document.getElementById('groups_table');
+        x.style.display = 'block';
+    }
+</script>
+<h1>View results</h1><br>
+<form>
+    Show results from
+    <input type="date" name="show_from">
+    to
+    <input type="date" name="show_to"><br>
+    Show results from<br>
+    <input type="radio" name="group" value="all" onclick="tableOff()"> All of my groups<br>
+    <input type="radio" name="group" value="me" onclick="tableOff()"> Only me<br>
+    <input type="radio" name="group" value="custom" onclick="tableOn()"> Choose groups<br>
+    <table id="groups_table" hidden>
+        <thead>
+            <tr>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox"> Ryhmä1<br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox"> Ryhmä2<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<br><br>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <h2>Class</h2>
+            </th>
+            <th>
+                <h2>Winrate</h2>
+            </th>
+            <th>
+                <h2>Sample</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <h3>Warrior</h3>
+            </td>
+            <td>
+                <h3>100%</h3>
+            </td>
+            <td>
+                <h3>1</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Shaman</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Rogue</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Paladin</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Hunter</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Druid</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Warlock</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Mage</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Priest</h3>
+            </td>
+            <td>
+                <h3>0%</h3>
+            </td>
+            <td>
+                <h3>0</h3>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br><br>
+<a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+{% endblock %}

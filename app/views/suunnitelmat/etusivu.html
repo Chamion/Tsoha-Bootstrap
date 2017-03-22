@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form method="POST" target="{{base_path}}/etusivu">
+      Username:<br>
+      <input type="text" name="username"><br>
+      Password:<br>
+      <input type="password" name="password"><br>
+      <input type="submit" value="Log in" class="btn btn-primary btn-lg">
+  </form>
+  <br>
+  <a href="{{base_path}}/register" class="btn btn-primary btn-lg">Register</a>
+{% endblock %}

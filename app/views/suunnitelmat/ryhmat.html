@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Manage groups</h1><br>
+<button>Create new group</button><br><br>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <h2>My groups</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a href="{{base_path}}/404" class="btn btn-default">Ryhmä1</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{{base_path}}/404" class="btn btn-default">Ryhmä2</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br><br>
+<a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+{% endblock %}

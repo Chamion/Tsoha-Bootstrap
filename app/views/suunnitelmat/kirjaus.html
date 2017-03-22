@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Log results</h1>
+<br>
+<form>
+    Class:<br>
+    <select name="hero">
+        <option value="1">Warrior</option>
+        <option value="2">Shaman</option>
+        <option value="3">Rogue</option>
+        <option value="4">Paladin</option>
+        <option value="5">Hunter</option>
+        <option value="6">Druid</option>
+        <option value="7">Warlock</option>
+        <option value="8">Mage</option>
+        <option value="9">Priest</option>
+    </select><br>
+    Opponent:<br>
+    <select name="opponent">
+        <option value="1">Warrior</option>
+        <option value="2">Shaman</option>
+        <option value="3">Rogue</option>
+        <option value="4">Paladin</option>
+        <option value="5">Hunter</option>
+        <option value="6">Druid</option>
+        <option value="7">Warlock</option>
+        <option value="8">Mage</option>
+        <option value="9">Priest</option>
+    </select><br>
+    <input type="radio" name="win" value="win"> Win <br>
+    <input type="radio" name="win" value="loss"> Loss <br>
+    <input type="checkbox" name="legend" checked> Legend<br>
+    <input type="submit" value="Submit result">
+</form>
+<br><br>
+<a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+{% endblock %}
