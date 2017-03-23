@@ -27,3 +27,11 @@
   $routes->get('/analyysi', function() {
     HelloWorldController::analyysi();
   });
+  
+  $routes->get('/poista', function() {
+    HelloWorldController::poista();
+  });
+  
+  $routes->get('/ryhma1', function() {
+    HelloWorldController::ryhma1();
+  });

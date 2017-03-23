@@ -12,12 +12,12 @@ CREATE TABLE Game (
     win boolean,
     hero INTEGER,
     opponent INTEGER,
-    book_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    book_date TIMESTAMP DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE Team(
     id SERIAL PRIMARY KEY,
-    johtaja INTEGER REFERENCES Player(id),
+    leader INTEGER REFERENCES Player(id),
     group_name varchar(32) NOT NULL,
     closed boolean DEFAULT true
 );

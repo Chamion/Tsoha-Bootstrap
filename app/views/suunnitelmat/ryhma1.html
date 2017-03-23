@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    function toggle(id) {
+        var x = document.getElementById(id);
+        if(x.style.display == 'none'){
+            x.style.display = 'block';
+        }else {
+            x.style.display = 'none';
+        }
+    }
+</script>
+<a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
+<h1>Ryhmä1</h1><br>
+<button onclick="toggle('settings'); toggle('disband')">Group settings</button>
+<form id="settings" hidden>
+    <br>
+    <input type="checkbox" name="closed" checked> Invite-only<br>
+</form>
+<button id="disband" hidden>Disband group</button>
+<form>
+    <br>
+    <input type="text" name="invited_player"> <input type="submit" value="Invite">
+</form>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <h3>testaaja</h3>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <h3>testaaja2</h3>
+            </td>
+            <td>
+                <button>Remove</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

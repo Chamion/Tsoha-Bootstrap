@@ -2,25 +2,29 @@
 
 {% block content %}
 <script>
-    function tableOff() {
-        var x = document.getElementById('groups_table');
+    function hide(id) {
+        var x = document.getElementById(id);
         x.style.display = 'none';
     }
-    function tableOn() {
-        var x = document.getElementById('groups_table');
+    function show(id) {
+        var x = document.getElementById(id);
         x.style.display = 'block';
     }
 </script>
 <h1>View results</h1><br>
 <form>
-    Show results from
-    <input type="date" name="show_from">
-    to
-    <input type="date" name="show_to"><br>
     Show results from<br>
-    <input type="radio" name="group" value="all" onclick="tableOff()"> All of my groups<br>
-    <input type="radio" name="group" value="me" onclick="tableOff()"> Only me<br>
-    <input type="radio" name="group" value="custom" onclick="tableOn()"> Choose groups<br>
+    <input type="radio" name="date" value="all" onclick="hide('date_input')" checked> All time<br>
+    <input type="radio" name="date" value="custom" onclick="show('date_input')"> Choose timeframe<br>
+    <div id="date_input" hidden>
+        <input type="date" name="show_from">
+        to
+        <input type="date" name="show_to">
+    </div><br>
+    Show results from<br>
+    <input type="radio" name="group" value="all" onclick="hide('groups_table')"> All of my groups<br>
+    <input type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
+    <input type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
     <table id="groups_table" hidden>
         <thead>
             <tr>
@@ -62,10 +66,10 @@
                 <h3>Warrior</h3>
             </td>
             <td>
-                <h3>100%</h3>
+                <h3>50%</h3>
             </td>
             <td>
-                <h3>1</h3>
+                <h3>2</h3>
             </td>
         </tr>
         <tr>

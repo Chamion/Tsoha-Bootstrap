@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    function hide(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'none';
+    }
+    function show(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'block';
+    }
+</script>
+<a href="{{base_path}}/kirjaus" class="btn btn-primary btn-lg">Back to Logging</a><br>
+<h1>Delete results</h1><br>
+<form>
+    Show results from<br>
+    <input type="radio" name="date" value="all" onclick="hide('date_input')" checked> All time<br>
+    <input type="radio" name="date" value="custom" onclick="show('date_input')"> Choose timeframe<br>
+    <div id="date_input" hidden>
+        <input type="date" name="show_from">
+        to
+        <input type="date" name="show_to">
+    </div><br>
+</form>
+<button>Delete all shown results</button><br>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <h2>Class</h2>
+            </th>
+            <th>
+                <h2>Opponent</h2>
+            </th>
+            <th>
+                <h2>Win/Loss</h2>
+            </th>
+            <th>
+                <h2>Legend</h2>
+            </th>
+            <th>
+                <h2>Date</h2>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <h3>Warrior</h3>
+            </td>
+            <td>
+                <h3>Warrior</h3>
+            </td>
+            <td>
+                <h3>Win</h3>
+            </td>
+            <td>
+                <h3>true</h3>
+            </td>
+            <td>
+                <h3>23.03.2017</h3>
+            </td>
+            <td>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Warrior</h3>
+            </td>
+            <td>
+                <h3>Shaman</h3>
+            </td>
+            <td>
+                <h3>Loss</h3>
+            </td>
+            <td>
+                <h3>true</h3>
+            </td>
+            <td>
+                <h3>23.03.2017</h3>
+            </td>
+            <td>
+                <button>Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

@@ -31,4 +31,12 @@
     public static function analyysi(){
         View::make('suunnitelmat/analyysi.html');
     }
+    
+    public static function poista(){
+        View::make('suunnitelmat/poista.html');
+    }
+    
+    public static function ryhma1(){
+        View::make('suunnitelmat/ryhma1.html');
+    }
   }
