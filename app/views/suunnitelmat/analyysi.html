@@ -61,105 +61,19 @@
         </tr>
     </thead>
     <tbody>
+        {% for stat in stats %}
         <tr>
             <td>
-                <h3>Warrior</h3>
+                <h3>{{stat.header}}</h3>
             </td>
             <td>
-                <h3>50%</h3>
+                <h3>{{stat.winrate}}%</h3>
             </td>
             <td>
-                <h3>2</h3>
+                <h3>{{stat.sample}}</h3>
             </td>
         </tr>
-        <tr>
-            <td>
-                <h3>Shaman</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Rogue</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Paladin</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Hunter</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Druid</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Warlock</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Mage</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Priest</h3>
-            </td>
-            <td>
-                <h3>0%</h3>
-            </td>
-            <td>
-                <h3>0</h3>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 <br><br>

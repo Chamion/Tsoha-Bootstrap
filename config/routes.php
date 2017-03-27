@@ -9,7 +9,11 @@
   });
   
   $routes->get('/etusivu', function() {
-    HelloWorldController::etusivu();
+      PlayerController::loginPage();
+  });
+  
+  $routes->post('/etusivu', function() {
+      PlayerController::login();
   });
   
   $routes->get('/paasivu', function() {
@@ -17,7 +21,11 @@
   });
   
   $routes->get('/kirjaus', function() {
-    HelloWorldController::kirjaus();
+      GameController::loggingPage();
+  });
+  
+  $routes->post('/kirjaus', function() {
+      GameController::addResult();
   });
   
   $routes->get('/ryhmat', function() {
@@ -25,11 +33,15 @@
   });
   
   $routes->get('/analyysi', function() {
-    HelloWorldController::analyysi();
+      GameController::stats();
   });
   
   $routes->get('/poista', function() {
-    HelloWorldController::poista();
+      GameController::removeList();
+  });
+  
+  $routes->post('/poista', function() {
+      GameController::remove();
   });
   
   $routes->get('/ryhma1', function() {

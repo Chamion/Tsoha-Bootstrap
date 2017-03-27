@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Log results</h1>
 <br>
-<form>
+<form method="POST" target="{{base_path}}/kirjaus">
     Class:<br>
     <select name="hero">
         <option value="1">Warrior</option>
@@ -28,7 +28,7 @@
         <option value="8">Mage</option>
         <option value="9">Priest</option>
     </select><br>
-    <input type="radio" name="win" value="win"> Win <br>
+    <input type="radio" name="win" value="win" checked> Win <br>
     <input type="radio" name="win" value="loss"> Loss <br>
     <input type="checkbox" name="legend" checked> Legend<br>
     <input type="submit" value="Submit result">

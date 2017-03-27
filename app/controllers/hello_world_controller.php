@@ -8,8 +8,9 @@
     }
 
     public static function sandbox(){
-      // Testaa koodiasi täällä
-      View::make('helloworld.html');
+        // Testaa koodiasi täällä
+        $all = GameModel::all();
+        echo $all[0]->hero;
     }
     
     public static function etusivu(){
@@ -30,10 +31,6 @@
     
     public static function analyysi(){
         View::make('suunnitelmat/analyysi.html');
-    }
-    
-    public static function poista(){
-        View::make('suunnitelmat/poista.html');
     }
     
     public static function ryhma1(){

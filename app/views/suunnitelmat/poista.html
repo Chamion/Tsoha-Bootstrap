@@ -46,46 +46,31 @@
         </tr>
     </thead>
     <tbody>
+        {% for game in games %}
         <tr>
             <td>
-                <h3>Warrior</h3>
+                <h3>{{game.hero}}</h3>
             </td>
             <td>
-                <h3>Warrior</h3>
+                <h3>{{game.opponent}}</h3>
             </td>
             <td>
-                <h3>Win</h3>
+                <h3>{{game.win}}</h3>
             </td>
             <td>
-                <h3>true</h3>
+                <h3>{{game.legend}}</h3>
             </td>
             <td>
-                <h3>23.03.2017</h3>
+                <h3>{{game.date}}</h3>
             </td>
             <td>
-                <button>Delete</button>
+                <form method="POST" action="{{base_path}}/poista">
+                    <input type="hidden" name="id" value="{{game.id}}">
+                    <input type="submit" value="Delete">
+                </form>
             </td>
         </tr>
-        <tr>
-            <td>
-                <h3>Warrior</h3>
-            </td>
-            <td>
-                <h3>Shaman</h3>
-            </td>
-            <td>
-                <h3>Loss</h3>
-            </td>
-            <td>
-                <h3>true</h3>
-            </td>
-            <td>
-                <h3>23.03.2017</h3>
-            </td>
-            <td>
-                <button>Delete</button>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
