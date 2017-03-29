@@ -7,24 +7,26 @@
         x.style.display = 'block';
     }
 </script>
-<form method="POST" target="{{base_path}}/etusivu">
+<form method="POST" action="{{base_path}}/etusivu">
     Username:<br>
     <input type="text" name="username"><br>
     Password:<br>
     <input type="password" name="password"><br>
+    <input type="hidden" name="register" value="false">
     <input type="submit" value="Log in" class="btn btn-primary btn-lg">
 </form>
 <br>
 <button onclick="show('register')">
     Register
 </button>
-<form id="register" hidden>
+<form id="register" method="POST" action="{{base_path}}/etusivu" hidden>
     Username:<br>
     <input type="text" name="username"><br>
     Password:<br>
     <input type="password" name="password"><br>
     Confirm password:<br>
-    <input type="password" name="password"><br>
+    <input type="password"><br>
+    <input type="hidden" name="register" value="true">
     <input type="submit" value="Register" class="btn btn-primary btn-lg">
 </form>
 {% endblock %}

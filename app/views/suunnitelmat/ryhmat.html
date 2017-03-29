@@ -1,8 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script>
+    function hide(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'none';
+    }
+    function show(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'block';
+    }
+</script>
 <h1>Manage groups</h1><br>
-<button>Create new group</button><br><br>
+<button id="createButton" onclick="show('createGroup'); hide('createButton');">Create new group</button><br><br>
+<form id="createGroup" method="POST" action="{{base_path}}/ryhmat" hidden>
+    <input type="text" name="groupName"> Group name<br>
+    <input type="submit" value="Create new group">
+</form>
 <table class="table forum table-striped table-hover">
     <thead>
         <tr>
@@ -12,16 +26,16 @@
         </tr>
     </thead>
     <tbody>
+        {% for team in teams %}
         <tr>
             <td>
-                <a href="{{base_path}}/ryhma1" class="btn btn-default">Ryhmä1</a>
+                <form method="POST" action="{{base_path}}/ryhma1">
+                    <input type="hidden" name="teamId" value="{{team.id}}">
+                    <input type="submit" value="{{team.name}}">
+                </form>
             </td>
         </tr>
-        <tr>
-            <td>
-                <a href="{{base_path}}/404" class="btn btn-default">Ryhmä2</a>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 <br><br>

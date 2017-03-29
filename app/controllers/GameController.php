@@ -2,7 +2,8 @@
 
 class GameController extends BaseController{
     public static function removeList(){
-        $games = GameModel::findByPlayer(1);
+        $player = $_SESSION['player'];
+        $games = GameModel::findByPlayer($player);
         View::make('suunnitelmat/poista.html', array('games' => $games));
     }
     
@@ -12,8 +13,17 @@ class GameController extends BaseController{
         GameController::removeList();
     }
     
-    public static function loggingPage(){
-        View::make('suunnitelmat/kirjaus.html', array());
+    public static function loggingPage($params){
+        if($params == null){
+            View::make('suunnitelmat/kirjaus.html', array(
+                'legend' => 1,
+                'win' => 1,
+                'hero' => 1,
+                'opponent' => 1
+            ));
+        }else{
+            View::make('suunnitelmat/kirjaus.html', $params);
+        }
     }
     
     public static function addResult(){
@@ -29,7 +39,13 @@ class GameController extends BaseController{
             $win = 0;
         }
         GameModel::add($player, $legend, $win, $_POST['hero'], $_POST['opponent']);
-        View::make('suunnitelmat/kirjaus.html', array());
+        $params = array(
+            'legend' => $legend,
+            'win' => $win,
+            'hero' => $_POST['hero'],
+            'opponent' => $_POST['opponent']
+        );
+        GameController::loggingPage($params);
     }
     
     public static function stats(){

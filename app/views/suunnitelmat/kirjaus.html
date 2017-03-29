@@ -3,9 +3,9 @@
 {% block content %}
 <h1>Log results</h1>
 <br>
-<form method="POST" target="{{base_path}}/kirjaus">
+<form method="POST" action="{{base_path}}/kirjaus">
     Class:<br>
-    <select name="hero">
+    <select id="hero" name="hero">
         <option value="1">Warrior</option>
         <option value="2">Shaman</option>
         <option value="3">Rogue</option>
@@ -17,7 +17,7 @@
         <option value="9">Priest</option>
     </select><br>
     Opponent:<br>
-    <select name="opponent">
+    <select id="opponent" name="opponent">
         <option value="1">Warrior</option>
         <option value="2">Shaman</option>
         <option value="3">Rogue</option>
@@ -28,13 +28,36 @@
         <option value="8">Mage</option>
         <option value="9">Priest</option>
     </select><br>
-    <input type="radio" name="win" value="win" checked> Win <br>
-    <input type="radio" name="win" value="loss"> Loss <br>
-    <input type="checkbox" name="legend" checked> Legend<br>
+    <input id="win" type="radio" name="win" value="win"> Win <br>
+    <input id="loss" type="radio" name="win" value="loss"> Loss <br>
+    <input id="legend" type="checkbox" name="legend"> Legend<br>
     <input type="submit" value="Submit result">
 </form>
 <br><br>
 <a href="{{base_path}}/poista">Remove a logged result</a>
 <br><br>
 <a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+<div hidden>
+    <!--Hirveä hakkaus, jolla saadaan parametrit luettua javascriptin sisällä.-->
+    <p id="heroIn" title="{{hero}}"></p>
+    <p id="opponentIn" title="{{opponent}}"></p>
+    <p id="winIn" title="{{win}}"></p>
+    <p id="legendIn" title="{{legend}}"></p>
+</div>
+<script>
+    function set(id, value){
+        var x = document.getElementById(id);
+        x.value = value;
+    }
+    set('hero', document.getElementById('heroIn').getAttribute('title'));
+    set('opponent', document.getElementById('opponentIn').getAttribute('title'));
+    if(document.getElementById("winIn").getAttribute('title') == 1){
+        document.getElementById("win").checked = true;
+    }else{
+        document.getElementById("loss").checked = true;
+    }
+    if(document.getElementById("legendIn").getAttribute('title') == 1){
+        document.getElementById("legend").checked = true;
+    }
+</script>
 {% endblock %}

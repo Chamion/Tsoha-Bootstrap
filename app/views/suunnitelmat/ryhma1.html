@@ -12,13 +12,17 @@
     }
 </script>
 <a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
-<h1>Ryhmä1</h1><br>
+<h1>{{team.name}}</h1><br>
 <button onclick="toggle('settings'); toggle('disband')">Group settings</button>
-<form id="settings" hidden>
+<form id="settings">
     <br>
     <input type="checkbox" name="closed" checked> Invite-only<br>
 </form>
 <button id="disband" hidden>Disband group</button>
+<script>
+    document.getElementById('settings').style.display = 'none';
+    document.getElementById('disband').style.display = 'none';
+</script>
 <form>
     <br>
     <input type="text" name="invited_player"> <input type="submit" value="Invite">
@@ -31,20 +35,19 @@
         </tr>
     </thead>
     <tbody>
+        {% for member in members %}
         <tr>
             <td>
-                <h3>testaaja</h3>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                <h3>testaaja2</h3>
+                <h3>{{member.username}}</h3>
             </td>
             <td>
-                <button>Remove</button>
+                <form method="POST" action="{{base_path}}/ryhma1">
+                    <input type="hidden" name="memberId" value="{{member.id}}">
+                    <input type="submit" value="Remove">
+                </form>
             </td>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
