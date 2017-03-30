@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
+<h1>{{team.name}}</h1><br>
+<a href="{{base_path}}/leave">Leave group</a>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in members %}
+        <tr>
+            <td>
+                <h3>{{member.username}}</h3>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

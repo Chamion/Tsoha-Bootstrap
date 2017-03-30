@@ -12,22 +12,27 @@ class PlayerController extends BaseController{
         }
         $id = PlayerModel::login($params['username'], $params['password']);
         if($id == 0){
-            View::make('suunnitelmat/etusivu.html');
+            Redirect::to('/etusivu');
             return;
         }
         session_unset();
         session_destroy();
         session_start();
         $_SESSION['player'] = $id;
-        $player = PlayerModel::findById($id);
-        View::make('suunnitelmat/paasivu.html', array('player' => $player));
+        $_SESSION['gameInput'] = null;
+        Redirect::to('/paasivu');
     }
     
     public static function register($username, $password){
         if(PlayerModel::nameAvailable($username)){
             PlayerModel::addPlayer($username, $password);
         }
-        View::make('suunnitelmat/etusivu.html');
+        Redirect::to('/etusivu');
+    }
+    
+    public static function navPage(){
+        $player = PlayerModel::findById($_SESSION['player']);
+        View::make('suunnitelmat/paasivu.html', array('player' => $player));
     }
 }
 

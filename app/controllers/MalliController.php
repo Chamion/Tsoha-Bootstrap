@@ -1,16 +1,27 @@
 <?php
 
-class GameController extends BaseController{
+class MalliController extends BaseController{
+    
+    public static function malliInit(){
+        session_unset();
+        session_destroy();
+        session_start();
+        $_SESSION['player'] = 1;
+        $_SESSION['gameInput'] = null;
+        $_SESSION['find'] = null;
+        MalliController::loggingPage();
+    }
+    
     public static function removeList(){
         $player = $_SESSION['player'];
-        $games = GameModel::all();
-        View::make('suunnitelmat/poista.html', array('games' => $games));
+        $games = GameModel::findByPlayer($player);
+        View::make('viikko3vaatimukset/listaus.html', array('games' => $games));
     }
     
     public static function remove(){
         $params = $_POST;
         GameModel::removeById($params['id']);
-        Redirect::to('/poista');
+        Redirect::to('/mallilistaus');
     }
     
     public static function loggingPage(){
@@ -22,7 +33,7 @@ class GameController extends BaseController{
                 'opponent' => 1
             );
         }
-        View::make('suunnitelmat/kirjaus.html', $_SESSION['gameInput']);
+        View::make('viikko3vaatimukset/lisays.html', $_SESSION['gameInput']);
     }
     
     public static function addResult(){
@@ -44,12 +55,22 @@ class GameController extends BaseController{
             'hero' => $_POST['hero'],
             'opponent' => $_POST['opponent']
         );
-        Redirect::to('/kirjaus');
+        Redirect::to('/malli');
     }
     
-    public static function stats(){
-        $player = $_SESSION['player'];
-        $stats = GameModel::generalPrivateStats($player);
-        View::make('suunnitelmat/analyysi.html', array('stats' => $stats));
+    public static function findPage(){
+        if($_SESSION['find'] == null){
+            View::make('viikko3vaatimukset/haku.html');
+        }else{
+            $game = GameModel::findById($_SESSION['find']);
+            View::make('viikko3vaatimukset/hakuResult.html',array('game' => $game));
+        }
+    }
+    
+    public static function find(){
+        if($_POST['id'] != ''){
+            $_SESSION['find'] = $_POST['id'];
+        }
+        Redirect::to('/mallihaku');
     }
 }

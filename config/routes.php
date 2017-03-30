@@ -17,11 +17,11 @@ $routes->post('/etusivu', function() {
 });
 
 $routes->get('/paasivu', function() {
-    HelloWorldController::paasivu();
+    PlayerController::navPage();
 });
 
 $routes->get('/kirjaus', function() {
-    GameController::loggingPage(null);
+    GameController::loggingPage();
 });
 
 $routes->post('/kirjaus', function() {
@@ -49,9 +49,45 @@ $routes->post('/poista', function() {
 });
 
 $routes->get('/ryhma1', function() {
-    HelloWorldController::ryhma1();
+    TeamController::teamPage();
 });
 
 $routes->post('/ryhma1', function() {
-    TeamController::teamPage();
+    TeamController::teamPageInit();
+});
+
+$routes->post('/kick', function() {
+   TeamController::kick(); 
+});
+
+$routes->get('/leave', function() {
+    TeamController::leave();
+});
+
+$routes->get('/malliinit', function() {
+    MalliController::malliInit();
+});
+
+$routes->get('/malli', function() {
+    MalliController::loggingPage();
+});
+
+$routes->post('/malli', function() {
+    MalliController::addResult();
+});
+
+$routes->get('/mallilistaus', function() {
+    MalliController::removeList();
+});
+
+$routes->post('/mallilistaus', function() {
+    MalliController::remove();
+});
+
+$routes->get('/mallihaku', function() {
+    MalliController::findPage();
+});
+
+$routes->post('/mallihaku', function() {
+    MalliController::find();
 });

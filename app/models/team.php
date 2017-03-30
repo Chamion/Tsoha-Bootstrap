@@ -34,6 +34,11 @@ class TeamModel extends BaseModel{
         }
         return null;
     }
+    
+    public static function severMembership($player, $team){
+        $query = DB::connection()->prepare('DELETE FROM Membership WHERE player = :player AND team = :team;');
+        $query->execute(array('player' => $player, 'team' => $team));
+    }
 }
 
 class ListTeam {

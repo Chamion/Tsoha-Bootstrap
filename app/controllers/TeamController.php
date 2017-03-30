@@ -11,15 +11,41 @@ class TeamController extends BaseController{
         $player = $_SESSION['player'];
         $params = $_POST;
         TeamModel::addTeam($player, $params['groupName']);
-        TeamController::managePage();
+        Redirect::to('/ryhmat');
+    }
+    
+    public static function teamPageInit(){
+        $_SESSION['teamId'] = $_POST['teamId'];
+        TeamController::teamPage();
     }
     
     public static function teamPage(){
         $player = $_SESSION['player'];
-        $teamId = $_POST['teamId'];
-        $team = TeamModel::findById($teamId);
+        $team = TeamModel::findById($_SESSION['teamId']);
         $members = PlayerModel::findByTeam($team->id);
-        View::make('suunnitelmat/ryhma1.html', array('team' => $team, 'members' => $members));
+        if($player == $team->leader){
+            $path = 'suunnitelmat/ryhma1.html';
+        }else{
+            $path = 'suunnitelmat/ryhma2.html';
+        }
+        View::make($path, array('team' => $team, 'members' => $members));
+    }
+    
+    public static function kick(){
+        $params = $_POST;
+        $team = TeamModel::findById($_SESSION['teamId']);
+        $toKick = $params['memberId'];
+        if($team->leader == $toKick){
+            //johtajaa ei voi poistaa.
+        } else {
+            
+        }
+        Redirect::to('/ryhma1');
+    }
+    
+    public static function leave(){
+        TeamModel::severMembership($_SESSION['player'], $_SESSION['teamId']);
+        TeamController::managePage();
     }
 }
 

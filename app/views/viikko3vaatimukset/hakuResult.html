@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{base_path}}/malli" class="btn btn-primary btn-lg">Back to Logging</a><br>
+<h1>Find results</h1><br>
+<form method="POST">
+    <input type="text" name="id"> Id<br>
+    <input type="submit" value="Find">
+</form>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <h2>Class</h2>
+            </th>
+            <th>
+                <h2>Opponent</h2>
+            </th>
+            <th>
+                <h2>Win/Loss</h2>
+            </th>
+            <th>
+                <h2>Legend</h2>
+            </th>
+            <th>
+                <h2>Date</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <h3>{{game.hero}}</h3>
+            </td>
+            <td>
+                <h3>{{game.opponent}}</h3>
+            </td>
+            <td>
+                <h3>{{game.win}}</h3>
+            </td>
+            <td>
+                <h3>{{game.legend}}</h3>
+            </td>
+            <td>
+                <h3>{{game.date}}</h3>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
