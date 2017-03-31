@@ -12,8 +12,8 @@
     }
 </script>
 <h1>View results</h1><br>
-<form>
-    Show results from<br>
+<form method="POST" action="{{base_path}}/analyysi">
+    Use results from<br>
     <input type="radio" name="date" value="all" onclick="hide('date_input')" checked> All time<br>
     <input type="radio" name="date" value="custom" onclick="show('date_input')"> Choose timeframe<br>
     <div id="date_input" hidden>
@@ -21,8 +21,8 @@
         to
         <input type="date" name="show_to">
     </div><br>
-    Show results from<br>
-    <input type="radio" name="group" value="all" onclick="hide('groups_table')"> All of my groups<br>
+    Use results from<br>
+    <input type="radio" name="group" value="all" onclick="hide('groups_table')" checked> All of my groups<br>
     <input type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
     <input type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
     <table id="groups_table" hidden>
@@ -32,18 +32,31 @@
             </tr>
         </thead>
         <tbody>
+            {% for group in groups %}
             <tr>
                 <td>
-                    <input type="checkbox"> Ryhmä1<br>
+                    <input type="checkbox" name="{{group.id}}"> {{group.name}}<br>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <input type="checkbox"> Ryhmä2<br>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
-    </table>
+    </table><br>
+    Show<br>
+    <input type="radio" name="class" value="all" onclick="hide('hero');" checked>All class winrates<br>
+    <input type="radio" name="class" value="for" onclick="show('hero');">Mathups for a class<br>
+    <select id="hero" name="hero" hidden>
+        <option value="1">Warrior</option>
+        <option value="2">Shaman</option>
+        <option value="3">Rogue</option>
+        <option value="4">Paladin</option>
+        <option value="5">Hunter</option>
+        <option value="6">Druid</option>
+        <option value="7">Warlock</option>
+        <option value="8">Mage</option>
+        <option value="9">Priest</option>
+    </select>
+    <br>
+    <input type="submit" value="Refresh">
 </form>
 <br><br>
 <table class="table forum table-striped table-hover">

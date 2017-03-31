@@ -40,6 +40,10 @@ $routes->get('/analyysi', function() {
     GameController::stats();
 });
 
+$routes->post('/analyysi', function() {
+    GameController::statsRefresh();
+});
+
 $routes->get('/poista', function() {
     GameController::removeList();
 });

@@ -79,7 +79,37 @@ class GameModel extends BaseModel {
         }
         return $stats;
     }
+    
+    public static function matchupPrivateStats($player, $hero) {
+        $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE player = :player AND Game.hero = :hero GROUP BY Game.opponent ORDER BY Game.opponent');
+        $query->execute(array('player' => $player, 'hero' => $hero));
+        $rows = $query->fetchAll();
 
+        $stats = array();
+        foreach ($rows as $row) {
+            $stats[] = new Stats($row['opponent'], $row['winrate'], $row['sample']);
+        }
+        return $stats;
+    }
+    
+    public static function matchupGroupStats($groups, $hero){
+        $stringForm = '(';
+        foreach ($groups as $group) {
+            $stringForm = $stringForm . $group . ',';
+        }
+        $stringForm = $stringForm . '0)';
+        //stringForm upotetaan suoraan statement:tiin, jotta kielletty merkki ',' ei sensuroidu. Hirveä hakkaus, mutta toimii.
+        //stringForm ei sisällä käyttäjän kirjoittamaa syötettä, joten injektiovaaraa ei ole.
+        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game, Membership WHERE Game.hero = :hero AND Game.player = Membership.player AND Membership.team IN ' . $stringForm . ' AND Membership.accepted GROUP BY Game.opponent ORDER BY Game.opponent';
+        $query = DB::connection()->prepare($statement);
+        $query->execute(array('hero' => $hero));
+        $rows = $query->fetchAll();
+        $stats = array();
+        foreach ($rows as $row) {
+            $stats[] = new Stats($row['opponent'], $row['winrate'], $row['sample']);
+        }
+        return $stats;
+    }
 }
 
 class Stats {

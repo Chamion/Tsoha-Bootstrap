@@ -20,6 +20,7 @@ class PlayerController extends BaseController{
         session_start();
         $_SESSION['player'] = $id;
         $_SESSION['gameInput'] = null;
+        $_SESSION['statsInput'] = null;
         Redirect::to('/paasivu');
     }
     

@@ -47,11 +47,61 @@ class GameController extends BaseController{
         Redirect::to('/kirjaus');
     }
     
+    public static function statsRefresh(){
+        $_SESSION['statsInput'] = array(
+            'date' => $_POST['date'],
+            'group' => $_POST['group'],
+            'class' => $_POST['class']
+        );
+        if($_SESSION['statsInput']['group'] == 'custom'){
+            $_SESSION['statsInput']['groupIds'] = array();
+            foreach (TeamModel::findByMember($_SESSION['player']) as $team){
+                if(isset($_POST['' . $team->id])){
+                    $_SESSION['statsInput']['groupIds'][] = $team->id;
+                }
+            }
+        }
+        if($_SESSION['statsInput']['class'] == 'for'){
+            $_SESSION['statsInput']['hero'] = $_POST['hero'];
+        }
+        Redirect::to('/analyysi');
+    }
+    
     public static function stats(){
+        if($_SESSION['statsInput'] == null){
+            $_SESSION['statsInput'] = array(
+                'date' => 'all',
+                'group' => 'all',
+                'class' => 'all'
+            );
+        }
         $player = $_SESSION['player'];
-        $groups = array('1','2');
-        //$stats = GameModel::generalPrivateStats($player);
-        $stats = GameModel::generalGroupStats($groups);
-        View::make('suunnitelmat/analyysi.html', array('stats' => $stats));
+        $allGroups = TeamModel::findByMember($player);
+        if($_SESSION['statsInput']['class'] == 'all'){
+            if($_SESSION['statsInput']['group'] == 'all'){
+                $groupIds = array();
+                foreach ($allGroups as $group) {
+                    $groupIds[] = $group->id;
+                }
+                $stats = GameModel::generalGroupStats($groupIds);
+            }else if($_SESSION['statsInput']['group'] == 'me'){
+                $stats = GameModel::generalPrivateStats($player);
+            }else{
+                $stats = GameModel::generalGroupStats($_SESSION['statsInput']['groupIds']);
+            }
+        }else if($_SESSION['statsInput']['class'] == 'for'){
+            if($_SESSION['statsInput']['group'] == 'all'){
+                $groupIds = array();
+                foreach ($allGroups as $group) {
+                    $groupIds[] = $group->id;
+                }
+                $stats = GameModel::matchupGroupStats($groupIds, $_SESSION['statsInput']['hero']);
+            }else if($_SESSION['statsInput']['group'] == 'me'){
+                $stats = GameModel::matchupPrivateStats($player, $_SESSION['statsInput']['hero']);
+            }else{
+                $stats = GameModel::matchupGroupStats($_SESSION['statsInput']['groupIds'], $_SESSION['statsInput']['hero']);
+            }
+        }
+        View::make('suunnitelmat/analyysi.html', array('stats' => $stats, 'groups' => $allGroups));
     }
 }

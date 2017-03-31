@@ -1,4 +1,5 @@
 .DS_Store
 *~
 /doc/dokumentaatio.md
+/doc/yuml tekstit
 /nbproject/private/
