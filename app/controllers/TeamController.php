@@ -4,7 +4,7 @@ class TeamController extends BaseController{
     
     public static function managePage(){
         $player = $_SESSION['player'];
-        View::make('suunnitelmat/ryhmat.html', array('teams' => TeamModel::findByMember($player)));
+        View::make('suunnitelmat/ryhmat.html', array('teams' => TeamModel::findByMember($player), 'invites' => TeamModel::findInvites($player)));
     }
     
     public static function create(){
@@ -23,12 +23,14 @@ class TeamController extends BaseController{
         $player = $_SESSION['player'];
         $team = TeamModel::findById($_SESSION['teamId']);
         $members = PlayerModel::findByTeam($team->id);
+        $params = array('team' => $team, 'members' => $members);
         if($player == $team->leader){
             $path = 'suunnitelmat/ryhma1.html';
+            $params['invites'] = PlayerModel::findByInvite($team->id);
         }else{
             $path = 'suunnitelmat/ryhma2.html';
         }
-        View::make($path, array('team' => $team, 'members' => $members));
+        View::make($path, $params);
     }
     
     public static function kick(){
@@ -38,7 +40,7 @@ class TeamController extends BaseController{
         if($team->leader == $toKick){
             //johtajaa ei voi poistaa.
         } else {
-            
+            TeamModel::severMembership($toKick, $team->id);
         }
         Redirect::to('/ryhma1');
     }
@@ -46,6 +48,23 @@ class TeamController extends BaseController{
     public static function leave(){
         TeamModel::severMembership($_SESSION['player'], $_SESSION['teamId']);
         TeamController::managePage();
+    }
+    
+    public static function invite(){
+        $player = PlayerModel::findByName($_POST['player']);
+        if($player != null){
+            TeamModel::invite($_SESSION['teamId'], $player->id);
+        }
+        Redirect::to('/ryhma1');
+    }
+    
+    public static function inviteChoice(){
+        if($_POST['inviteChoice'] == 'Accept'){
+            TeamModel::join($_SESSION['player'], $_POST['team']);
+        } else {
+            TeamModel::severMembership($_SESSION['player'], $_POST['team']);
+        }
+        Redirect::to('/ryhmat');
     }
 }
 

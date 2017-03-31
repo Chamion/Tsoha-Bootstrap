@@ -23,6 +23,17 @@ class PlayerModel extends BaseModel{
         return null;
     }
     
+    public static function findByName($username){
+        $query = DB::connection()->prepare('SELECT id, username FROM Player Where username = :username;');
+        $query->execute(array('username' => $username));
+        $row = $query->fetch();
+        
+        if($row){
+            return new Player($row);
+        }
+        return null;
+    }
+    
     public static function nameAvailable($username) {
         $query = DB::connection()->prepare('SELECT id FROM Player Where username = :username;');
         $query->execute(array('username' => $username));
@@ -40,7 +51,19 @@ class PlayerModel extends BaseModel{
     }
     
     public static function findByTeam($team){
-        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id;');
+        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND Membership.accepted;');
+        $query->execute(array('team' => $team));
+        $rows = $query->fetchAll();
+        $members = array();
+        
+        foreach ($rows as $row) {
+            $members[] = new Player($row);
+        }
+        return $members;
+    }
+    
+    public static function findByInvite($team){
+        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND NOT Membership.accepted;');
         $query->execute(array('team' => $team));
         $rows = $query->fetchAll();
         $members = array();

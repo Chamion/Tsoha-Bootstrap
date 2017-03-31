@@ -49,7 +49,9 @@ class GameController extends BaseController{
     
     public static function stats(){
         $player = $_SESSION['player'];
-        $stats = GameModel::generalPrivateStats($player);
+        $groups = array('1','2');
+        //$stats = GameModel::generalPrivateStats($player);
+        $stats = GameModel::generalGroupStats($groups);
         View::make('suunnitelmat/analyysi.html', array('stats' => $stats));
     }
 }

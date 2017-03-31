@@ -23,19 +23,46 @@
     document.getElementById('settings').style.display = 'none';
     document.getElementById('disband').style.display = 'none';
 </script>
-<form>
+<form method="POST" action="{{base_path}}/invite">
     <br>
-    <input type="text" name="invited_player"> <input type="submit" value="Invite">
+    <input type="text" name="player"> <input type="submit" value="Invite">
 </form>
 <table class="table forum table-striped table-hover">
     <thead>
         <tr>
-            <th></th>
+            <th>
+                <h2>Members</h2>
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for member in members %}
+        <tr>
+            <td>
+                <h3>{{member.username}}</h3>
+            </td>
+            <td>
+                <form method="POST" action="{{base_path}}/kick">
+                    <input type="hidden" name="memberId" value="{{member.id}}">
+                    <input type="submit" value="Remove">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <h2>Invites</h2>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in invites %}
         <tr>
             <td>
                 <h3>{{member.username}}</h3>

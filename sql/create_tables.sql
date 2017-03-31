@@ -24,5 +24,6 @@ CREATE TABLE Team(
 
 CREATE TABLE Membership(
     player INTEGER REFERENCES Player(id),
-    team INTEGER REFERENCES Team(id)
+    team INTEGER REFERENCES Team(id),
+    accepted boolean DEFAULT false
 );

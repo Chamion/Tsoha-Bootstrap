@@ -9,5 +9,5 @@ INSERT INTO Game (player, legend, win, hero, opponent) VALUES
 
 INSERT INTO Team(leader, group_name) VALUES (1, 'testiryhmä');
 
-INSERT INTO Membership (player, team) VALUES (1, 1);
-INSERT INTO Membership (player, team) VALUES (2, 1);
+INSERT INTO Membership (player, team, accepted) VALUES (1, 1, true);
+INSERT INTO Membership (player, team, accepted) VALUES (2, 1, true);

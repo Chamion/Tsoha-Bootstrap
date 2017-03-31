@@ -69,7 +69,7 @@ class GameModel extends BaseModel {
         $stringForm = $stringForm . '0)';
         //stringForm upotetaan suoraan statement:tiin, jotta kielletty merkki ',' ei sensuroidu. Hirveä hakkaus, mutta toimii.
         //stringForm ei sisällä käyttäjän kirjoittamaa syötettä, joten injektiovaaraa ei ole.
-        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game, Membership WHERE Game.player = Membership.player AND Membership.team IN ' . $stringForm . ' GROUP BY Game.hero ORDER BY Game.hero';
+        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game, Membership WHERE Game.player = Membership.player AND Membership.team IN ' . $stringForm . ' AND Membership.accepted GROUP BY Game.hero ORDER BY Game.hero';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();

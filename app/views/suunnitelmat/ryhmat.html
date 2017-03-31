@@ -38,6 +38,32 @@
         {% endfor %}
     </tbody>
 </table>
+<table class="table forum table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <h2>My invites</h2>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in invites %}
+        <tr>
+            <td>
+                <h3>{{team.name}}</h3>
+            </td>
+            <td>
+                <form method="POST" action="{{base_path}}/join">
+                    <input type="hidden" name="team" value="{{team.id}}">
+                    <input type="submit" name="inviteChoice" value="Accept"> 
+                    <input type="submit" name="inviteChoice" value="Reject">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <br><br>
 <a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
 {% endblock %}

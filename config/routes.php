@@ -91,3 +91,11 @@ $routes->get('/mallihaku', function() {
 $routes->post('/mallihaku', function() {
     MalliController::find();
 });
+
+$routes->post('/invite', function() {
+    TeamController::invite();
+});
+
+$routes->post('/join', function() {
+    TeamController::inviteChoice();
+});
