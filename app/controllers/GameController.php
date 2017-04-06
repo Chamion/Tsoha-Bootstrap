@@ -2,18 +2,21 @@
 
 class GameController extends BaseController{
     public static function removeList(){
+        self::check_logged_in();
         $player = $_SESSION['player'];
         $games = GameModel::all();
         View::make('suunnitelmat/poista.html', array('games' => $games));
     }
     
     public static function remove(){
+        self::check_logged_in();
         $params = $_POST;
         GameModel::removeById($params['id']);
         Redirect::to('/poista');
     }
     
     public static function loggingPage(){
+        self::check_logged_in();
         if($_SESSION['gameInput'] == null){
             $_SESSION['gameInput'] = array(
                 'legend' => 1,
@@ -26,6 +29,7 @@ class GameController extends BaseController{
     }
     
     public static function addResult(){
+        self::check_logged_in();
         $player = $_SESSION['player'];
         if(isset($_POST['legend'])){
             $legend = 1;
@@ -48,6 +52,7 @@ class GameController extends BaseController{
     }
     
     public static function statsRefresh(){
+        self::check_logged_in();
         $_SESSION['statsInput'] = array(
             'date' => $_POST['date'],
             'group' => $_POST['group'],
@@ -68,6 +73,7 @@ class GameController extends BaseController{
     }
     
     public static function stats(){
+        self::check_logged_in();
         if($_SESSION['statsInput'] == null){
             $_SESSION['statsInput'] = array(
                 'date' => 'all',

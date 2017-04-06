@@ -1,6 +1,11 @@
 <?php
 
 class TeamModel extends BaseModel{
+    
+    public function __construct() {
+        parent::__construct();
+    }
+    
     public static function addTeam($leader, $name){
         $query = DB::connection()->prepare('INSERT INTO Team(leader, group_name) VALUES (:leader, :name);');
         $query->execute(array('leader' => $leader, 'name' => $name));

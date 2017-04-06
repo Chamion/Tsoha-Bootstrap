@@ -21,7 +21,7 @@
 </button>
 <form id="register" method="POST" action="{{base_path}}/etusivu" hidden>
     Username:<br>
-    <input type="text" name="username"><br>
+    <input id="registerUsername" type="text" name="username"><br>
     Password:<br>
     <input type="password" name="password"><br>
     Confirm password:<br>
@@ -29,4 +29,15 @@
     <input type="hidden" name="register" value="true">
     <input type="submit" value="Register" class="btn btn-primary btn-lg">
 </form>
+<div hidden>
+    <p id="registerUsernameInput" title="{{registerUsernameInput}}"></p>
+</div>
+<script>
+    var input = document.getElementById('registerUsernameInput').getAttribute('title');
+    var output = document.getElementById('registerUsername');
+    output.value = input;
+    if(input != ''){
+        show('register');
+    }
+</script>
 {% endblock %}

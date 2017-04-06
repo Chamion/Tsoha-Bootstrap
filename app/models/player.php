@@ -1,6 +1,17 @@
 <?php
 
 class PlayerModel extends BaseModel{
+    
+    public $errors;
+    
+    public function __construct($username, $password) {
+        parent::__construct();
+        $this->validators = array('validateUsername', 'validatePassword');
+        $this->username = $username;
+        $this->password = $password;
+        $this->errors = $this->errors();
+    }
+    
     public static function login($username, $password){
         $query = DB::connection()->prepare('SELECT id FROM Player WHERE username = :un AND password = :pw;');
         $query->execute(array('un' => $username, 'pw' => $password));
@@ -72,6 +83,24 @@ class PlayerModel extends BaseModel{
             $members[] = new Player($row);
         }
         return $members;
+    }
+    
+    public function validateUsername(){
+        $errors = array();
+        $errors = self::validate_string($this->username, $errors);
+        if(strlen($this->username)>32){
+            $errors[] = 'Käyttäjänimi voi olla korkeintaan 32 merkkiä.';
+        }
+        return $errors;
+    }
+    
+    public function validatePassword(){
+        $errors = array();
+        $errors = self::validate_string($this->password, $errors);
+        if(strlen($this->password)>50){
+            $errors[] = 'Salasana voi olla korkeintaan 50 merkkiä.';
+        }
+        return $errors;
     }
 }
 

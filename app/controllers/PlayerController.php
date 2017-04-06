@@ -2,7 +2,12 @@
 
 class PlayerController extends BaseController{
     public static function loginPage(){
-        View::make('suunnitelmat/etusivu.html');
+        $params = array();
+        if(isset($_SESSION['registerUsernameInput'])){
+            $params['registerUsernameInput'] = $_SESSION['registerUsernameInput'];
+            unset($_SESSION['registerUsernameInput']);
+        }
+        View::make('suunnitelmat/etusivu.html', $params);
     }
     
     public static function login(){
@@ -26,13 +31,19 @@ class PlayerController extends BaseController{
     
     public static function register($username, $password){
         if(PlayerModel::nameAvailable($username)){
-            PlayerModel::addPlayer($username, $password);
+            //Luodaan uusi PlayerModel olio aina, kun rekisteröidään uusi player. Refaktoroinnin tarvetta.
+            $model = new PlayerModel($username, $password);
+            if(count($model->errors) > 0){
+                $_SESSION['registerUsernameInput'] = $username;
+            }
+            $model->addPlayer($username, $password);
         }
         Redirect::to('/etusivu');
     }
     
     public static function navPage(){
-        $player = PlayerModel::findById($_SESSION['player']);
+        self::check_logged_in();
+        $player = self::get_user_logged_in();
         View::make('suunnitelmat/paasivu.html', array('player' => $player));
     }
 }

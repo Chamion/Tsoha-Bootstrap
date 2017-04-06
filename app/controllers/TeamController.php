@@ -3,11 +3,13 @@
 class TeamController extends BaseController{
     
     public static function managePage(){
+        self::check_logged_in();
         $player = $_SESSION['player'];
         View::make('suunnitelmat/ryhmat.html', array('teams' => TeamModel::findByMember($player), 'invites' => TeamModel::findInvites($player)));
     }
     
     public static function create(){
+        self::check_logged_in();
         $player = $_SESSION['player'];
         $params = $_POST;
         TeamModel::addTeam($player, $params['groupName']);
@@ -15,11 +17,13 @@ class TeamController extends BaseController{
     }
     
     public static function teamPageInit(){
+        self::check_logged_in();
         $_SESSION['teamId'] = $_POST['teamId'];
         TeamController::teamPage();
     }
     
     public static function teamPage(){
+        self::check_logged_in();
         $player = $_SESSION['player'];
         $team = TeamModel::findById($_SESSION['teamId']);
         $members = PlayerModel::findByTeam($team->id);
@@ -34,6 +38,7 @@ class TeamController extends BaseController{
     }
     
     public static function kick(){
+        self::check_logged_in();
         $params = $_POST;
         $team = TeamModel::findById($_SESSION['teamId']);
         $toKick = $params['memberId'];
@@ -46,11 +51,13 @@ class TeamController extends BaseController{
     }
     
     public static function leave(){
+        self::check_logged_in();
         TeamModel::severMembership($_SESSION['player'], $_SESSION['teamId']);
         TeamController::managePage();
     }
     
     public static function invite(){
+        self::check_logged_in();
         $player = PlayerModel::findByName($_POST['player']);
         if($player != null){
             TeamModel::invite($_SESSION['teamId'], $player->id);
@@ -59,6 +66,7 @@ class TeamController extends BaseController{
     }
     
     public static function inviteChoice(){
+        self::check_logged_in();
         if($_POST['inviteChoice'] == 'Accept'){
             TeamModel::join($_SESSION['player'], $_POST['team']);
         } else {
