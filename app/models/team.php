@@ -2,8 +2,11 @@
 
 class TeamModel extends BaseModel{
     
-    public function __construct() {
+    public function __construct($groupName) {
         parent::__construct();
+        $this->validators = array('validateGroupName');
+        $this->groupName = $groupName;
+        $this->errors = $this->errors();
     }
     
     public static function addTeam($leader, $name){
@@ -71,6 +74,11 @@ class TeamModel extends BaseModel{
     public static function join($player, $team){
         $query = DB::connection()->prepare('UPDATE Membership SET accepted = true WHERE player = :player AND team = :team;');
         $query->execute(array('player' => $player, 'team' => $team));
+    }
+    
+    public function validateGroupName(){
+        $errors = array();
+        return $this->validate_string($this->groupName, $errors);
     }
 }
 

@@ -103,3 +103,15 @@ $routes->post('/invite', function() {
 $routes->post('/join', function() {
     TeamController::inviteChoice();
 });
+
+$routes->post('/edit', function() {
+    GameController::editInit();
+});
+
+$routes->get('/edit', function() {
+    GameController::editPage();
+});
+
+$routes->post('/editSave', function() {
+    GameController::editSave();
+});

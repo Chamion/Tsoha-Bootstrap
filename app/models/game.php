@@ -16,7 +16,7 @@ class GameModel extends BaseModel {
     }
 
     public static function findByPlayer($player) {
-        $query = DB::connection()->prepare('SELECT * FROM Game WHERE Player = :player');
+        $query = DB::connection()->prepare('SELECT * FROM Game WHERE Player = :player ORDER BY id DESC;');
         $query->execute(array('player' => $player));
         $rows = $query->fetchAll();
         $games = array();
@@ -110,6 +110,34 @@ class GameModel extends BaseModel {
         }
         return $stats;
     }
+    
+    public static function update($id, $player, $legend, $win, $hero, $opponent) {
+        $query = DB::connection()->prepare('UPDATE Game SET player = :player, legend = :legend, win = :win, hero = :hero, opponent = :opponent WHERE id = :id;');
+        $query->execute(array('id' => $id, 'player' => $player, 'legend' => $legend, 'win' => $win, 'hero' => $hero, 'opponent' => $opponent));
+    }
+}
+
+function classNumberToString($number){
+    if ($number == 1) {
+        return 'Warrior';
+    } else if ($number == 2) {
+        return 'Shaman';
+    } else if ($number == 3) {
+        return 'Rogue';
+    } else if ($number == 4) {
+        return 'Paladin';
+    } else if ($number == 5) {
+        return 'Hunter';
+    } else if ($number == 6) {
+        return 'Druid';
+    } else if ($number == 7) {
+        return 'Warlock';
+    } else if ($number == 8) {
+        return 'Mage';
+    } else if ($number == 9) {
+        return 'Priest';
+    }
+    return '';
 }
 
 class Stats {
@@ -117,25 +145,7 @@ class Stats {
     public $header, $winrate, $sample;
 
     public function __construct($header, $winrate, $sample) {
-        if ($header == 1) {
-            $this->header = 'Warrior';
-        } else if ($header == 2) {
-            $this->header = 'Shaman';
-        } else if ($header == 3) {
-            $this->header = 'Rogue';
-        } else if ($header == 4) {
-            $this->header = 'Paladin';
-        } else if ($header == 5) {
-            $this->header = 'Hunter';
-        } else if ($header == 6) {
-            $this->header = 'Druid';
-        } else if ($header == 7) {
-            $this->header = 'Warlock';
-        } else if ($header == 8) {
-            $this->header = 'Mage';
-        } else if ($header == 9) {
-            $this->header = 'Priest';
-        }
+        $this->header = classNumberToString($header);
         $this->winrate = $winrate;
         $this->sample = $sample;
     }
@@ -163,44 +173,8 @@ class Game {
         } else {
             $this->win = 'loss';
         }
-        if ($row['hero'] == 1) {
-            $this->hero = 'Warrior';
-        } else if ($row['hero'] == 2) {
-            $this->hero = 'Shaman';
-        } else if ($row['hero'] == 3) {
-            $this->hero = 'Rogue';
-        } else if ($row['hero'] == 4) {
-            $this->hero = 'Paladin';
-        } else if ($row['hero'] == 5) {
-            $this->hero = 'Hunter';
-        } else if ($row['hero'] == 6) {
-            $this->hero = 'Druid';
-        } else if ($row['hero'] == 7) {
-            $this->hero = 'Warlock';
-        } else if ($row['hero'] == 8) {
-            $this->hero = 'Mage';
-        } else if ($row['hero'] == 9) {
-            $this->hero = 'Priest';
-        }
-        if ($row['opponent'] == 1) {
-            $this->opponent = 'Warrior';
-        } else if ($row['opponent'] == 2) {
-            $this->opponent = 'Shaman';
-        } else if ($row['opponent'] == 3) {
-            $this->opponent = 'Rogue';
-        } else if ($row['opponent'] == 4) {
-            $this->opponent = 'Paladin';
-        } else if ($row['opponent'] == 5) {
-            $this->opponent = 'Hunter';
-        } else if ($row['opponent'] == 6) {
-            $this->opponent = 'Druid';
-        } else if ($row['opponent'] == 7) {
-            $this->opponent = 'Warlock';
-        } else if ($row['opponent'] == 8) {
-            $this->opponent = 'Mage';
-        } else if ($row['opponent'] == 9) {
-            $this->opponent = 'Priest';
-        }
+        $this->hero = classNumberToString($row['hero']);
+        $this->opponent = classNumberToString($row['opponent']);
         $this->date = $row['book_date'];
     }
 

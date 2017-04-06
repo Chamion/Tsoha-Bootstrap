@@ -5,7 +5,9 @@ class PlayerController extends BaseController{
         $params = array();
         if(isset($_SESSION['registerUsernameInput'])){
             $params['registerUsernameInput'] = $_SESSION['registerUsernameInput'];
+            $params['error'] = $_SESSION['errors'][0];
             unset($_SESSION['registerUsernameInput']);
+            unset($_SESSION['errors']);
         }
         View::make('suunnitelmat/etusivu.html', $params);
     }
@@ -35,8 +37,10 @@ class PlayerController extends BaseController{
             $model = new PlayerModel($username, $password);
             if(count($model->errors) > 0){
                 $_SESSION['registerUsernameInput'] = $username;
+                $_SESSION['errors'] = $model->errors;
+            }else{
+                $model->addPlayer($username, $password);
             }
-            $model->addPlayer($username, $password);
         }
         Redirect::to('/etusivu');
     }

@@ -5,14 +5,27 @@ class TeamController extends BaseController{
     public static function managePage(){
         self::check_logged_in();
         $player = $_SESSION['player'];
-        View::make('suunnitelmat/ryhmat.html', array('teams' => TeamModel::findByMember($player), 'invites' => TeamModel::findInvites($player)));
+        $params = array('teams' => TeamModel::findByMember($player), 'invites' => TeamModel::findInvites($player));
+        if(isset($_SESSION['groupNameInput'])){
+            $params['groupNameInput'] = $_SESSION['groupNameInput'];
+            $params['error'] = $_SESSION['errors'][0];
+            unset($_SESSION['groupNameInput']);
+            unset($_SESSION['errors']);
+        }
+        View::make('suunnitelmat/ryhmat.html', $params);
     }
     
     public static function create(){
         self::check_logged_in();
         $player = $_SESSION['player'];
         $params = $_POST;
-        TeamModel::addTeam($player, $params['groupName']);
+        $model = new TeamModel($params['groupName']);
+        if(count($model->errors) > 0){
+            $_SESSION['groupNameInput'] = $params['groupName'];
+            $_SESSION['errors'] = $model->errors;
+        }else{
+            TeamModel::addTeam($player, $params['groupName']);
+        }
         Redirect::to('/ryhmat');
     }
     

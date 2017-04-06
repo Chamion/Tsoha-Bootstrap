@@ -14,7 +14,8 @@
 <h1>Manage groups</h1><br>
 <button id="createButton" onclick="show('createGroup'); hide('createButton');">Create new group</button><br><br>
 <form id="createGroup" method="POST" action="{{base_path}}/ryhmat" hidden>
-    <input type="text" name="groupName"> Group name<br>
+    <input type="text" name="groupName" value="{{groupNameInput}}"> Group name<br>
+    <p id="errorMessage">{{error}}</p>
     <input type="submit" value="Create new group">
 </form>
 <table class="table forum table-striped table-hover">
@@ -66,4 +67,13 @@
 </table>
 <br><br>
 <a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+<script>
+    var error = document.getElementById('errorMessage').innerHTML;
+    if(error == ''){
+        hide('errorMessage');
+    }else{
+        show('createGroup');
+        hide('createButton');
+    }
+</script>
 {% endblock %}
