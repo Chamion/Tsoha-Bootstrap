@@ -68,34 +68,6 @@ $routes->get('/leave', function() {
     TeamController::leave();
 });
 
-$routes->get('/malliinit', function() {
-    MalliController::malliInit();
-});
-
-$routes->get('/malli', function() {
-    MalliController::loggingPage();
-});
-
-$routes->post('/malli', function() {
-    MalliController::addResult();
-});
-
-$routes->get('/mallilistaus', function() {
-    MalliController::removeList();
-});
-
-$routes->post('/mallilistaus', function() {
-    MalliController::remove();
-});
-
-$routes->get('/mallihaku', function() {
-    MalliController::findPage();
-});
-
-$routes->post('/mallihaku', function() {
-    MalliController::find();
-});
-
 $routes->post('/invite', function() {
     TeamController::invite();
 });
@@ -114,4 +86,8 @@ $routes->get('/edit', function() {
 
 $routes->post('/editSave', function() {
     GameController::editSave();
+});
+
+$routes->get('/logout', function() {
+    PlayerController::logout();
 });

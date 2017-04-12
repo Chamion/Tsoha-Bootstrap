@@ -34,7 +34,7 @@
     
     public function validate_string_null($str, $errors){
         if($str == null){
-            $errors[] = 'Syöte ei saa olla tyhjä.';
+            $errors[] = 'Input must not be empty.';
         }
         return $errors;
     }
@@ -42,7 +42,7 @@
     public function validate_string_tags($str, $errors){
         $stripped = strip_tags($str);
         if($stripped != $str){
-            $errors[] = 'Syöte ei saa sisältää html/php tageja.';
+            $errors[] = 'Input must not include html/php tags.';
         }
         return $errors;
     }

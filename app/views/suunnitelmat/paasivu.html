@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <span>Logged in as {{player.username}}    </span><button class="btn btn-primary btn-lg">Log out</button>
+  <span>Logged in as {{player.username}}    </span><a href="{{base_path}}/logout" class="btn btn-primary btn-lg">Log out</a>
   <br><br>
   <a href="{{base_path}}/kirjaus" class="btn btn-primary btn-lg">Log results</a>
   <br><br>

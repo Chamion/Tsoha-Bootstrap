@@ -9,6 +9,10 @@ class PlayerController extends BaseController{
             unset($_SESSION['registerUsernameInput']);
             unset($_SESSION['errors']);
         }
+        if(isset($_SESSION['usernameInput'])){
+            $params['usernameInput'] = $_SESSION['usernameInput'];
+            unset($_SESSION['usernameInput']);
+        }
         View::make('suunnitelmat/etusivu.html', $params);
     }
     
@@ -19,6 +23,7 @@ class PlayerController extends BaseController{
         }
         $id = PlayerModel::login($params['username'], $params['password']);
         if($id == 0){
+            $_SESSION['usernameInput'] = $params['username'];
             Redirect::to('/etusivu');
             return;
         }
@@ -49,6 +54,13 @@ class PlayerController extends BaseController{
         self::check_logged_in();
         $player = self::get_user_logged_in();
         View::make('suunnitelmat/paasivu.html', array('player' => $player));
+    }
+    
+    public static function logout(){
+        self::check_logged_in();
+        session_unset();
+        session_destroy();
+        Redirect::to('/etusivu');
     }
 }
 

@@ -12,7 +12,7 @@ CREATE TABLE Game (
     win boolean,
     hero INTEGER,
     opponent INTEGER,
-    book_date TIMESTAMP DEFAULT CURRENT_DATE
+    book_date date DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE Team(

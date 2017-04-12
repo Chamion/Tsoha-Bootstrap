@@ -9,12 +9,18 @@
 </script>
 <form method="POST" action="{{base_path}}/etusivu">
     Username:<br>
-    <input type="text" name="username"><br>
+    <input id="usernameIn" type="text" name="username" value="{{usernameInput}}"><br>
     Password:<br>
     <input type="password" name="password"><br>
     <input type="hidden" name="register" value="false">
     <input type="submit" value="Log in" class="btn btn-primary btn-lg">
+    <div id="loginError"></div>
 </form>
+<script>
+    if(document.getElementById('usernameIn').getAttribute('value') != ''){
+        document.getElementById('loginError').innerHTML = ' Invalid username or password.';
+    }
+</script>
 <br>
 <button onclick="show('register')">
     Register

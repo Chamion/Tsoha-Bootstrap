@@ -89,7 +89,7 @@ class PlayerModel extends BaseModel{
         $errors = array();
         $errors = self::validate_string($this->username, $errors);
         if(strlen($this->username)>32){
-            $errors[] = 'Käyttäjänimi voi olla korkeintaan 32 merkkiä.';
+            $errors[] = 'Username must be 32 characters or shorter.';
         }
         return $errors;
     }
@@ -98,7 +98,7 @@ class PlayerModel extends BaseModel{
         $errors = array();
         $errors = self::validate_string($this->password, $errors);
         if(strlen($this->password)>50){
-            $errors[] = 'Salasana voi olla korkeintaan 50 merkkiä.';
+            $errors[] = 'Password must be 50 characters or shorter.';
         }
         return $errors;
     }

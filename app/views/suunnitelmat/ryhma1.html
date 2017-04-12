@@ -15,17 +15,18 @@
 <h1>{{team.name}}</h1><br>
 <button onclick="toggle('settings'); toggle('disband')">Group settings</button>
 <form id="settings">
-    <br>
-    <input type="checkbox" name="closed" checked> Invite-only<br>
+    Make the group<br>
+    <input type="submit" name="closed" value="Invite-only">
+    <input type="submit" name="closed" value="Open">
 </form>
-<button id="disband" hidden>Disband group</button>
+<br><button id="disband" hidden>Disband group</button>
 <script>
     document.getElementById('settings').style.display = 'none';
     document.getElementById('disband').style.display = 'none';
 </script>
 <form method="POST" action="{{base_path}}/invite">
     <br>
-    <input type="text" name="player"> <input type="submit" value="Invite">
+    <input type="text" name="player" placeholder="username to invite"> <input type="submit" value="Invite">
 </form>
 <table class="table forum table-striped table-hover">
     <thead>
