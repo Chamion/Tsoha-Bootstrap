@@ -61,9 +61,9 @@ class PlayerModel extends BaseModel{
         $query->execute(array('username' => $username, 'password' => $password));
     }
     
-    public static function findByTeam($team){
-        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND Membership.accepted;');
-        $query->execute(array('team' => $team));
+    public static function findByTeam($team, $page){
+        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND Membership.accepted LIMIT 10 OFFSET :offset;');
+        $query->execute(array('team' => $team, 'offset' => ($page-1)*10));
         $rows = $query->fetchAll();
         $members = array();
         
@@ -73,9 +73,9 @@ class PlayerModel extends BaseModel{
         return $members;
     }
     
-    public static function findByInvite($team){
-        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND NOT Membership.accepted;');
-        $query->execute(array('team' => $team));
+    public static function findByInvite($team, $page){
+        $query = DB::connection()->prepare('SELECT Player.id AS id, Player.username AS username FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND NOT Membership.accepted LIMIT 10 OFFSET :offset;');
+        $query->execute(array('team' => $team, 'offset' => ($page-1)*10));
         $rows = $query->fetchAll();
         $members = array();
         
@@ -101,6 +101,34 @@ class PlayerModel extends BaseModel{
             $errors[] = 'Password must be 50 characters or shorter.';
         }
         return $errors;
+    }
+    
+    public static function countPagesByTeam($team){
+        $query = DB::connection()->prepare('SELECT COUNT(*) AS count FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND Membership.accepted;');
+        $query->execute(array('team' => $team));
+        $row = $query->fetch();
+        if(!$row){
+            return 1;
+        }
+        $pages = (int) ceil($row['count']/10);
+        if($pages <= 0){
+            return 1;
+        }
+        return $pages;
+    }
+    
+    public static function countPagesByInvite($team){
+        $query = DB::connection()->prepare('SELECT COUNT(*) AS count FROM Player, Membership WHERE Membership.team = :team AND Membership.player = Player.id AND NOT Membership.accepted;');
+        $query->execute(array('team' => $team));
+        $row = $query->fetch();
+        if(!$row){
+            return 1;
+        }
+        $pages = (int) ceil($row['count']/10);
+        if($pages <= 0){
+            return 1;
+        }
+        return $pages;
     }
 }
 

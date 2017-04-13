@@ -4,10 +4,26 @@
 <a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
 <h1>{{team.name}}</h1><br>
 <a href="{{base_path}}/leave">Leave group</a>
+<div id="memberPage" hidden>{{memberPage}}</div>
+<div id="maxMemberPage" hidden>{{maxMemberPage}}</div>
 <table class="table forum table-striped table-hover">
     <thead>
         <tr>
-            <th></th>
+            <th>
+                <h1>Members</h1>
+            </th>
+            <th>
+                <p>Page {{memberPage}} of {{maxMemberPage}}</p>
+            </th>
+            <th>
+                <form method="POST" action="{{base_path}}/group/pageflip">
+                    <input type="hidden" name="list" value="member">
+                    <input id="memberFirst" type="submit" name="button" value="first">
+                    <input id="memberPrevious" type="submit" name="button" value="previous">
+                    <input id="memberNext" type="submit" name="button" value="next">
+                    <input id="memberLast" type="submit" name="button" value="last">
+                </form>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -20,4 +36,16 @@
         {% endfor %}
     </tbody>
 </table>
+<script>
+    var memberPage = parseInt(document.getElementById('memberPage').innerHTML);
+    var maxMemberPage = parseInt(document.getElementById('maxMemberPage').innerHTML);
+    if(memberPage == 1){
+        document.getElementById('memberFirst').style.display = 'none';
+        document.getElementById('memberPrevious').style.display = 'none';
+    }
+    if(memberPage == maxMemberPage){
+        document.getElementById('memberNext').style.display = 'none';
+        document.getElementById('memberLast').style.display = 'none';
+    }
+</script>
 {% endblock %}

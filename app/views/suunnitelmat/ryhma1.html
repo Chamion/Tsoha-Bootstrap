@@ -12,29 +12,52 @@
     }
 </script>
 <a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
-<h1>{{team.name}}</h1><br>
+<h1>{{team.name}}</h1>
+<h2 id="joinId">Join id: {{team.id}}</h2>
 <button onclick="toggle('settings'); toggle('disband')">Group settings</button>
-<form id="settings">
+<form id="settings" method="POST" action="{{base_path}}/group/settings">
     Make the group<br>
-    <input type="submit" name="closed" value="Invite-only">
-    <input type="submit" name="closed" value="Open">
+    <div id="teamClosed" hidden>{{team.closed}}</div>
+    <input id="closeIn" type="submit" name="closed" value="Invite-only">
+    <input id="openIn" type="submit" name="closed" value="Open">
 </form>
 <br><button id="disband" hidden>Disband group</button>
 <script>
     document.getElementById('settings').style.display = 'none';
     document.getElementById('disband').style.display = 'none';
+    if(document.getElementById('teamClosed').innerHTML == '1'){
+        document.getElementById('closeIn').disabled = 'disabled';
+        document.getElementById('joinId').style.display = 'none';
+    }else{
+        document.getElementById('openIn').disabled = 'disabled';
+    }
 </script>
 <form method="POST" action="{{base_path}}/invite">
     <br>
     <input type="text" name="player" placeholder="username to invite"> <input type="submit" value="Invite">
 </form>
+<div id="memberPage" hidden>{{memberPage}}</div>
+<div id="inviteePage" hidden>{{inviteePage}}</div>
+<div id="maxMemberPage" hidden>{{maxMemberPage}}</div>
+<div id="maxInviteePage" hidden>{{maxInviteePage}}</div>
 <table class="table forum table-striped table-hover">
     <thead>
         <tr>
             <th>
                 <h2>Members</h2>
             </th>
-            <th></th>
+            <th>
+                <p>Page {{memberPage}} of {{maxMemberPage}}</p>
+            </th>
+            <th>
+                <form method="POST" action="{{base_path}}/group/pageflip">
+                    <input type="hidden" name="list" value="member">
+                    <input id="memberFirst" type="submit" name="button" value="first">
+                    <input id="memberPrevious" type="submit" name="button" value="previous">
+                    <input id="memberNext" type="submit" name="button" value="next">
+                    <input id="memberLast" type="submit" name="button" value="last">
+                </form>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -57,9 +80,20 @@
     <thead>
         <tr>
             <th>
-                <h2>Invites</h2>
+                <h2>Invited players</h2>
             </th>
-            <th></th>
+            <th>
+                <p>Page {{inviteePage}} of {{maxInviteePage}}</p>
+            </th>
+            <th>
+                <form method="POST" action="{{base_path}}/group/pageflip">
+                    <input type="hidden" name="list" value="invitee">
+                    <input id="inviteeFirst" type="submit" name="button" value="first">
+                    <input id="inviteePrevious" type="submit" name="button" value="previous">
+                    <input id="inviteeNext" type="submit" name="button" value="next">
+                    <input id="inviteeLast" type="submit" name="button" value="last">
+                </form>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -78,4 +112,26 @@
         {% endfor %}
     </tbody>
 </table>
+<script>
+    var memberPage = parseInt(document.getElementById('memberPage').innerHTML);
+    var maxMemberPage = parseInt(document.getElementById('maxMemberPage').innerHTML);
+    if(memberPage == 1){
+        document.getElementById('memberFirst').style.display = 'none';
+        document.getElementById('memberPrevious').style.display = 'none';
+    }
+    if(memberPage == maxMemberPage){
+        document.getElementById('memberNext').style.display = 'none';
+        document.getElementById('memberLast').style.display = 'none';
+    }
+    var inviteePage = parseInt(document.getElementById('inviteePage').innerHTML);
+    var maxInviteePage = parseInt(document.getElementById('maxInviteePage').innerHTML);
+    if(inviteePage == 1){
+        document.getElementById('inviteeFirst').style.display = 'none';
+        document.getElementById('inviteePrevious').style.display = 'none';
+    }
+    if(inviteePage == maxInviteePage){
+        document.getElementById('inviteeNext').style.display = 'none';
+        document.getElementById('inviteeLast').style.display = 'none';
+    }
+</script>
 {% endblock %}

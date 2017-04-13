@@ -20,9 +20,9 @@ class TeamModel extends BaseModel{
         $query3->execute(array('leader' => $leader, 'group' => $group));
     }
     
-    public static function findByMember($member){
-        $query = DB::connection()->prepare('SELECT Team.id AS id, Team.group_name AS name FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND Membership.accepted;');
-        $query->execute(array('member' => $member));
+    public static function findByMember($member, $page){
+        $query = DB::connection()->prepare('SELECT Team.id AS id, Team.group_name AS name FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND Membership.accepted LIMIT 10 OFFSET :offset;');
+        $query->execute(array('member' => $member, 'offset' => ($page-1)*10));
         $rows = $query->fetchAll();
         
         $teams = array();
@@ -32,9 +32,9 @@ class TeamModel extends BaseModel{
         return $teams;
     }
     
-    public static function findInvites($member){
-        $query = DB::connection()->prepare('SELECT Team.id AS id, Team.group_name AS name FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND NOT Membership.accepted;');
-        $query->execute(array('member' => $member));
+    public static function findInvites($member, $page){
+        $query = DB::connection()->prepare('SELECT Team.id AS id, Team.group_name AS name FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND NOT Membership.accepted LIMIT 10 OFFSET :offset;');
+        $query->execute(array('member' => $member, 'offset' => ($page-1)*10));
         $rows = $query->fetchAll();
         
         $teams = array();
@@ -76,9 +76,84 @@ class TeamModel extends BaseModel{
         $query->execute(array('player' => $player, 'team' => $team));
     }
     
+    public static function setClosed($team, $value){
+        $query = DB::connection()->prepare('UPDATE Team SET closed = :value WHERE id = :team;');
+        $params = array('team' => $team);
+        if($value){
+            $params['value'] = 'true';
+        }else{
+            $params['value'] = 'false';
+        }
+        $query->execute($params);
+    }
+    
     public function validateGroupName(){
         $errors = array();
         return $this->validate_string($this->groupName, $errors);
+    }
+    
+    public static function countPagesByMember($member){
+        $query = DB::connection()->prepare('SELECT COUNT(*) as count FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND Membership.accepted;');
+        $query->execute(array('member' => $member));
+        $row = $query->fetch();
+        if(!$row){
+            return 1;
+        }
+        $count = $row['count'];
+        $pages = (int) ceil($count/10);
+        if($pages <= 0){
+            $pages = 1;
+        }
+        return $pages;
+    }
+    
+    public static function countPagesInvites($member){
+        $query = DB::connection()->prepare('SELECT COUNT(*) AS count FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND NOT Membership.accepted');
+        $query->execute(array('member' => $member));
+        $row = $query->fetch();
+        if(!$row){
+            return 1;
+        }
+        $count = $row['count'];
+        $pages = (int) ceil($count/10);
+        if($pages <= 0){
+            $pages = 1;
+        }
+        return $pages;
+    }
+    
+    public static function joinOpen($player, $team){
+        if(self::findById($team) == null){
+            return;
+        }
+        if(self::isInvited($player, $team)){
+            return;
+        }
+        if(self::isClosed($team)){
+            return;
+        }
+        $query = DB::connection()->prepare('INSERT INTO Membership (player, team, accepted) VALUES (:player, :team, true);');
+        $query->execute(array('player' => $player, 'team' => $team));
+    }
+    
+    public static function isInvited($player, $team){
+        $query = DB::connection()->prepare('SELECT COUNT(*) as count FROM Membership WHERE player = :player AND team = :team;');
+        $query->execute(array('player' => $player, 'team' => $team));
+        $row = $query->fetch();
+        if($row['count'] == 0){
+            return false;
+        }
+        return true;
+    }
+    
+    public static function isClosed($team){
+        $query = DB::connection()->prepare('SELECT closed FROM Team WHERE id = :team;');
+        $query->execute(array('team' => $team));
+        $row = $query->fetch();
+        if($row['closed'] == 1){
+            return true;
+        }
+        return false;
     }
 }
 

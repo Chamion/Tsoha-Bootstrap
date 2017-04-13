@@ -91,3 +91,23 @@ $routes->post('/editSave', function() {
 $routes->get('/logout', function() {
     PlayerController::logout();
 });
+
+$routes->post('/groups/pageflip', function() {
+    TeamController::manageSetPage();
+});
+
+$routes->post('/group/pageflip', function(){
+    TeamController::teamSetPage();
+});
+
+$routes->post('/logging/remove', function(){
+    GameController::removeFlipPage();
+});
+
+$routes->post('/groups/join_open', function() {
+    TeamController::joinOpen();
+});
+
+$routes->post('/group/settings', function() {
+    TeamController::setClosed();
+});

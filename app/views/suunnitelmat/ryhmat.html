@@ -18,11 +18,31 @@
     <p id="errorMessage">{{error}}</p>
     <input type="submit" value="Create new group">
 </form>
+<form method="POST" action="{{base_path}}/groups/join_open">
+    <input type="text" name="joinId" placeholder="join ID"><br>
+    <input type="submit" value="Join team">
+</form>
+<div id="teamPage" hidden>{{teamPage}}</div>
+<div id="invitePage" hidden>{{invitePage}}</div>
+<div id="maxTeamPage" hidden>{{maxTeamPage}}</div>
+<div id="maxInvitePage" hidden>{{maxInvitePage}}</div>
 <table class="table forum table-striped table-hover">
     <thead>
         <tr>
             <th>
                 <h2>My groups</h2>
+            </th>
+            <th>
+                <p>Page {{teamPage}} of {{maxTeamPage}}</p>
+            </th>
+            <th>
+                <form method="POST" action="groups/pageflip">
+                    <input type="hidden" name="list" value="team">
+                    <input id="teamFirst" name="button" value="first" type="submit">  
+                    <input id="teamPrevious" name="button" value="previous" type="submit">   
+                    <input id="teamNext" name="button" value="next" type="submit">   
+                    <input id="teamLast" name="button" value="last" type="submit">
+                </form>
             </th>
         </tr>
     </thead>
@@ -45,7 +65,18 @@
             <th>
                 <h2>My invites</h2>
             </th>
-            <th></th>
+            <th>
+                <p>Page {{invitePage}} of {{maxInvitePage}}</p>
+            </th>
+            <th>
+                <form method="POST" action="groups/pageflip">
+                    <input type="hidden" name="list" value="invite">
+                    <input id="inviteFirst" name="button" value="first" type="submit">  
+                    <input id="invitePrevious" name="button" value="previous" type="submit">   
+                    <input id="inviteNext" name="button" value="next" type="submit">   
+                    <input id="inviteLast" name="button" value="last" type="submit">
+                </form>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -65,6 +96,28 @@
         {% endfor %}
     </tbody>
 </table>
+<script>
+    var teamPage = parseInt(document.getElementById('teamPage').innerHTML);
+    var maxTeamPage = parseInt(document.getElementById('maxTeamPage').innerHTML);
+    if(teamPage == 1){
+        document.getElementById('teamFirst').style.display = 'none';
+        document.getElementById('teamPrevious').style.display = 'none';
+    }
+    if(teamPage == maxTeamPage){
+        document.getElementById('teamNext').style.display = 'none';
+        document.getElementById('teamLast').style.display = 'none';
+    }
+    var invitePage = parseInt(document.getElementById('invitePage').innerHTML);
+    var maxInvitePage = parseInt(document.getElementById('maxInvitePage').innerHTML);
+    if(invitePage == 1){
+        document.getElementById('inviteFirst').style.display = 'none';
+        document.getElementById('invitePrevious').style.display = 'none';
+    }
+    if(invitePage == maxInvitePage){
+        document.getElementById('inviteNext').style.display = 'none';
+        document.getElementById('inviteLast').style.display = 'none';
+    }
+</script>
 <br><br>
 <a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
 <script>

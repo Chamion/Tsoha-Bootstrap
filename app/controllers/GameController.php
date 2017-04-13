@@ -5,8 +5,14 @@ class GameController extends BaseController {
     public static function removeList() {
         self::check_logged_in();
         $player = $_SESSION['player'];
-        $games = GameModel::findByPlayer($player);
-        View::make('suunnitelmat/poista.html', array('games' => $games));
+        $maxGamePage = GameModel::countPagesByPlayer($player);
+        if(!isset($_SESSION['gamePage'])){
+            $_SESSION['gamePage'] = 1;
+        }else if($_SESSION['gamePage'] > $maxGamePage || $_SESSION['gamePage'] == -1){
+            $_SESSION['gamePage'] = $maxGamePage;
+        }
+        $games = GameModel::findByPlayer($player, $_SESSION['gamePage']);
+        View::make('suunnitelmat/poista.html', array('games' => $games, 'gamePage' => $_SESSION['gamePage'], 'maxGamePage' => $maxGamePage));
     }
 
     public static function remove() {
@@ -150,6 +156,19 @@ class GameController extends BaseController {
             'opponent' => $_POST['opponent']
         );
         unset($_SESSION['gameId']);
+        Redirect::to('/poista');
+    }
+    
+    public static function removeFlipPage(){
+        if($_POST['button'] == 'first'){
+            $_SESSION['gamePage'] = 1;
+        }else if($_POST['button'] == 'previous'){
+            $_SESSION['gamePage'] = $_SESSION['gamePage'] - 1;
+        }else if($_POST['button'] == 'next'){
+            $_SESSION['gamePage'] = $_SESSION['gamePage'] + 1;
+        }else {
+            $_SESSION['gamePage'] = -1;
+        }
         Redirect::to('/poista');
     }
 }

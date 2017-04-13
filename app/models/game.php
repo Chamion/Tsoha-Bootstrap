@@ -15,9 +15,9 @@ class GameModel extends BaseModel {
         return $games;
     }
 
-    public static function findByPlayer($player) {
-        $query = DB::connection()->prepare('SELECT * FROM Game WHERE Player = :player ORDER BY id DESC;');
-        $query->execute(array('player' => $player));
+    public static function findByPlayer($player, $page) {
+        $query = DB::connection()->prepare('SELECT * FROM Game WHERE Player = :player ORDER BY id DESC LIMIT 10 OFFSET :offset;');
+        $query->execute(array('player' => $player, 'offset' => ($page-1)*10));
         $rows = $query->fetchAll();
         $games = array();
 
@@ -114,6 +114,21 @@ class GameModel extends BaseModel {
     public static function update($id, $player, $legend, $win, $hero, $opponent) {
         $query = DB::connection()->prepare('UPDATE Game SET player = :player, legend = :legend, win = :win, hero = :hero, opponent = :opponent WHERE id = :id;');
         $query->execute(array('id' => $id, 'player' => $player, 'legend' => $legend, 'win' => $win, 'hero' => $hero, 'opponent' => $opponent));
+    }
+    
+    public static function countPagesByPlayer($player){
+        $query = DB::connection()->prepare('SELECT COUNT(*) AS count FROM Game WHERE Player = :player;');
+        $query->execute(array('player' => $player));
+        $row = $query->fetch();
+        if(!$row){
+            return 1;
+        }
+        $count = $row['count'];
+        $pages = (int) ceil($count/10);
+        if($pages <= 0){
+            $pages = 1;
+        }
+        return $pages;
     }
 }
 

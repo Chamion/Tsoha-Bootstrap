@@ -13,17 +13,13 @@
 </script>
 <a href="{{base_path}}/kirjaus" class="btn btn-primary btn-lg">Back to Logging</a><br>
 <h1>Delete results</h1><br>
-<form>
-    Show results from<br>
-    <input type="radio" name="date" value="all" onclick="hide('date_input')" checked> All time<br>
-    <input type="radio" name="date" value="custom" onclick="show('date_input')"> Choose timeframe<br>
-    <div id="date_input" hidden>
-        <input type="date" name="show_from">
-        to
-        <input type="date" name="show_to">
-    </div><br>
+<p>Page {{gamePage}} of {{maxGamePage}}</p>
+<form method="POST" action="{{base_path}}/logging/remove">
+    <input id="first" type="submit" name="button" value="first">
+    <input id="previous" type="submit" name="button" value="previous">
+    <input id="next" type="submit" name="button" value="next">
+    <input id="last" type="submit" name="button" value="last">
 </form>
-<button>Delete all shown results</button><br>
 <table class="table forum table-striped table-hover">
     <thead>
         <tr>
@@ -80,4 +76,18 @@
         {% endfor %}
     </tbody>
 </table>
+<div id="gamePage" hidden>{{gamePage}}</div>
+<div id="maxGamePage" hidden>{{maxGamePage}}</div>
+<script>
+    var gamePage = parseInt(document.getElementById('gamePage').innerHTML);
+    var maxGamePage = parseInt(document.getElementById('maxGamePage').innerHTML);
+    if(gamePage == 1){
+        document.getElementById('first').style.display = 'none';
+        document.getElementById('previous').style.display = 'none';
+    }
+    if(gamePage == maxGamePage){
+        document.getElementById('next').style.display = 'none';
+        document.getElementById('last').style.display = 'none';
+    }
+</script>
 {% endblock %}
