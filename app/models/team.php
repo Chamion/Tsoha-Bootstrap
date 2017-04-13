@@ -155,6 +155,13 @@ class TeamModel extends BaseModel{
         }
         return false;
     }
+    
+    public static function destroy($team){
+        $memberQuery = DB::connection()->prepare('DELETE FROM Member WHERE team = :team;');
+        $memberQuery->execute(array('team' => $team));
+        $teamQuery = DB::connection()->prepare('DELETE FROM Team WHERE id = :team');
+        $teamQuery->execute(array('team' => $team));
+    }
 }
 
 class ListTeam {

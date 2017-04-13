@@ -169,5 +169,9 @@ class TeamController extends BaseController{
         TeamModel::joinOpen($_SESSION['player'], $_POST['joinId']);
         Redirect::to('/ryhmat');
     }
+    
+    public static function disband(){
+        //Toteuttamatta
+    }
 }
 
