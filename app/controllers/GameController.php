@@ -61,13 +61,12 @@ class GameController extends BaseController {
     public static function statsRefresh() {
         self::check_logged_in();
         $_SESSION['statsInput'] = array(
-            'date' => $_POST['date'],
             'group' => $_POST['group'],
             'class' => $_POST['class']
         );
         if ($_SESSION['statsInput']['group'] == 'custom') {
             $_SESSION['statsInput']['groupIds'] = array();
-            foreach (TeamModel::findByMember($_SESSION['player']) as $team) {
+            foreach (TeamModel::findByMember($_SESSION['player'], 1) as $team) {
                 if (isset($_POST['' . $team->id])) {
                     $_SESSION['statsInput']['groupIds'][] = $team->id;
                 }
@@ -83,13 +82,12 @@ class GameController extends BaseController {
         self::check_logged_in();
         if ($_SESSION['statsInput'] == null) {
             $_SESSION['statsInput'] = array(
-                'date' => 'all',
                 'group' => 'all',
                 'class' => 'all'
             );
         }
         $player = $_SESSION['player'];
-        $allGroups = TeamModel::findByMember($player);
+        $allGroups = TeamModel::findByMember($player, 1);
         if ($_SESSION['statsInput']['class'] == 'all') {
             if ($_SESSION['statsInput']['group'] == 'all') {
                 $groupIds = array();

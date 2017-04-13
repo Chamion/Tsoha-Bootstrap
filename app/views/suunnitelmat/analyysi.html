@@ -14,14 +14,6 @@
 <h1>View results</h1><br>
 <form method="POST" action="{{base_path}}/analyysi">
     Use results from<br>
-    <input type="radio" name="date" value="all" onclick="hide('date_input')" checked> All time<br>
-    <input type="radio" name="date" value="custom" onclick="show('date_input')"> Choose timeframe<br>
-    <div id="date_input" hidden>
-        <input type="date" name="show_from">
-        to
-        <input type="date" name="show_to">
-    </div><br>
-    Use results from<br>
     <input type="radio" name="group" value="all" onclick="hide('groups_table')" checked> All of my groups<br>
     <input type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
     <input type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>

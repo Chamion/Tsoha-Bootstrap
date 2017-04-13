@@ -1,23 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script>
-    function hide(id) {
-        var x = document.getElementById(id);
-        x.style.display = 'none';
-    }
-    function show(id) {
-        var x = document.getElementById(id);
-        x.style.display = 'block';
-    }
-</script>
 <h1>Manage groups</h1><br>
-<button id="createButton" onclick="show('createGroup'); hide('createButton');">Create new group</button><br><br>
-<form id="createGroup" method="POST" action="{{base_path}}/ryhmat" hidden>
+<form method="POST" action="{{base_path}}/ryhmat">
     <input type="text" name="groupName" value="{{groupNameInput}}"> Group name<br>
     <p id="errorMessage">{{error}}</p>
     <input type="submit" value="Create new group">
-</form>
+</form><br>
 <form method="POST" action="{{base_path}}/groups/join_open">
     <input type="text" name="joinId" placeholder="join ID"><br>
     <input type="submit" value="Join team">
