@@ -14,9 +14,9 @@
 <h1>View results</h1><br>
 <form method="POST" action="{{base_path}}/analyysi">
     Use results from<br>
-    <input type="radio" name="group" value="all" onclick="hide('groups_table')" checked> All of my groups<br>
-    <input type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
-    <input type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
+    <input id='inputGroupAll' type="radio" name="group" value="all" onclick="hide('groups_table')"> All of my groups<br>
+    <input id='inputGroupMe' type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
+    <input id='inputGroupCustom' type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
     <table id="groups_table" hidden>
         <thead>
             <tr>
@@ -27,15 +27,15 @@
             {% for group in groups %}
             <tr>
                 <td>
-                    <input type="checkbox" name="{{group.id}}"> {{group.name}}<br>
+                    <input id="group{{group.id}}" type="checkbox" name="{{group.id}}" class="group_checkbox"> {{group.name}}<br>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table><br>
     Show<br>
-    <input type="radio" name="class" value="all" onclick="hide('hero');" checked>All class winrates<br>
-    <input type="radio" name="class" value="for" onclick="show('hero');">Mathups for a class<br>
+    <input id='inputClassAll' type="radio" name="class" value="all" onclick="hide('hero');">All class winrates<br>
+    <input id='inputClassFor' type="radio" name="class" value="for" onclick="show('hero');">Matchups for a class<br>
     <select id="hero" name="hero" hidden>
         <option value="1">Warrior</option>
         <option value="2">Shaman</option>
@@ -81,6 +81,39 @@
         {% endfor %}
     </tbody>
 </table>
+<script>
+    var group = "{{statsInput['group']}}";
+    var id;
+    if(group == 'all'){
+        id = 'inputGroupAll';
+    }else if(group == 'me'){
+        id = 'inputGroupMe';
+    }else{
+        id = 'inputGroupCustom';
+        show('groups_table');
+    }
+    document.getElementById(id).setAttribute('checked', 'checked');
+    
+    var classInput = "{{statsInput['class']}}";
+    var classId;
+    if(classInput == 'all'){
+        classId = 'inputClassAll';
+    }else{
+        classId = 'inputClassFor';
+        show('hero');
+    }
+    document.getElementById(classId).setAttribute('checked', 'checked');
+    
+    if(classInput == 'for'){
+        var heroInput = "{{statsInput['hero']}}";
+        document.getElementById('hero').value = heroInput;
+    }
+</script>
+{% for groupId in statsInput['groupIds']%}
+<script>
+    document.getElementById('group{{groupId}}').setAttribute('checked', 'checked');
+</script>
+{% endfor %}
 <br><br>
 <a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
 {% endblock %}

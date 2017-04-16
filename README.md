@@ -14,4 +14,3 @@ Hearthstone-pelin pelaajille kirjanpitoapuväline, joka auttaa kirjaamaan pelien
 
 ### Merkintöjä
 * Testauskäyttöön on käyttäjät "testaaja" ja "testaaja2" molempien salasana on "testi123".
-* Tiedetty ongelma: Useamman kuin yhden ryhmän tuloksia hyödyntäessä analyysisivu antaa vääriä tuloksia.

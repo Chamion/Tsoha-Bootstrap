@@ -69,7 +69,7 @@ class GameModel extends BaseModel {
         $stringForm = $stringForm . '0)';
         //stringForm upotetaan suoraan statement:tiin, jotta kielletty merkki ',' ei sensuroidu. Hirveä hakkaus, mutta toimii.
         //stringForm ei sisällä käyttäjän kirjoittamaa syötettä, joten injektiovaaraa ei ole.
-        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game, Membership WHERE Game.player = Membership.player AND Membership.team IN ' . $stringForm . ' AND Membership.accepted GROUP BY Game.hero ORDER BY Game.hero';
+        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game WHERE Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.hero ORDER BY Game.hero';
         $query = DB::connection()->prepare($statement);
         $query->execute();
         $rows = $query->fetchAll();
@@ -100,7 +100,7 @@ class GameModel extends BaseModel {
         $stringForm = $stringForm . '0)';
         //stringForm upotetaan suoraan statement:tiin, jotta kielletty merkki ',' ei sensuroidu. Hirveä hakkaus, mutta toimii.
         //stringForm ei sisällä käyttäjän kirjoittamaa syötettä, joten injektiovaaraa ei ole.
-        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game, Membership WHERE Game.hero = :hero AND Game.player = Membership.player AND Membership.team IN ' . $stringForm . ' AND Membership.accepted GROUP BY Game.opponent ORDER BY Game.opponent';
+        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE Game.hero = :hero AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.opponent ORDER BY Game.opponent';
         $query = DB::connection()->prepare($statement);
         $query->execute(array('hero' => $hero));
         $rows = $query->fetchAll();

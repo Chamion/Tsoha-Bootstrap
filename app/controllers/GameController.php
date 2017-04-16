@@ -113,7 +113,7 @@ class GameController extends BaseController {
                 $stats = GameModel::matchupGroupStats($_SESSION['statsInput']['groupIds'], $_SESSION['statsInput']['hero']);
             }
         }
-        View::make('suunnitelmat/analyysi.html', array('stats' => $stats, 'groups' => $allGroups));
+        View::make('suunnitelmat/analyysi.html', array('stats' => $stats, 'groups' => $allGroups, 'statsInput' => $_SESSION['statsInput']));
     }
 
     public static function editInit() {
