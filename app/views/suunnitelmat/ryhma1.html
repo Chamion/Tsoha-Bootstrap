@@ -11,30 +11,39 @@
         }
     }
 </script>
-<a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
+<a href="{{base_path}}/ryhmat" class="btn btn-default">Back to Groups</a><br>
 <h1>{{team.name}}</h1>
 <h2 id="joinId">Join id: {{team.id}}</h2>
-<button onclick="toggle('settings'); toggle('disband')">Group settings</button>
+<button onclick="toggle('settings'); toggle('disband')" class="btn">Group settings</button>
 <form id="settings" method="POST" action="{{base_path}}/group/settings">
-    Make the group<br>
+    <br>
     <div id="teamClosed" hidden>{{team.closed}}</div>
-    <input id="closeIn" type="submit" name="closed" value="Invite-only">
-    <input id="openIn" type="submit" name="closed" value="Open">
+    <div class="btn-group">
+        <input id="closeIn" type="submit" name="closed" value="Invite-only" class="btn">
+        <input id="openIn" type="submit" name="closed" value="Open" class="btn">
+    </div>
 </form>
-<br><button id="disband" hidden>Disband group (unimplemented)</button>
+<br><button id="disband" class="btn btn-danger" hidden>Disband group (unimplemented)</button>
 <script>
     document.getElementById('settings').style.display = 'none';
     document.getElementById('disband').style.display = 'none';
     if(document.getElementById('teamClosed').innerHTML == '1'){
         document.getElementById('closeIn').disabled = 'disabled';
+        document.getElementById('closeIn').classList.add('btn-primary');
         document.getElementById('joinId').style.display = 'none';
     }else{
         document.getElementById('openIn').disabled = 'disabled';
+        document.getElementById('openIn').classList.add('btn-primary');
     }
 </script>
 <form method="POST" action="{{base_path}}/invite">
     <br>
-    <input type="text" name="player" placeholder="username to invite"> <input type="submit" value="Invite">
+    <div class="form-inline">
+        <div class="input-group">
+            <input type="text" name="player" placeholder="username to invite" class="form-control">
+            <span class="input-group-btn"><input type="submit" value="Invite" class="btn btn-primary"></span>
+        </div>
+    </div>
 </form>
 <div id="memberPage" hidden>{{memberPage}}</div>
 <div id="inviteePage" hidden>{{inviteePage}}</div>
@@ -69,7 +78,7 @@
             <td>
                 <form method="POST" action="{{base_path}}/kick">
                     <input type="hidden" name="memberId" value="{{member.id}}">
-                    <input type="submit" value="Remove">
+                    <input type="submit" value="Remove" class="btn btn-danger">
                 </form>
             </td>
         </tr>
@@ -105,7 +114,7 @@
             <td>
                 <form method="POST" action="{{base_path}}/kick">
                     <input type="hidden" name="memberId" value="{{member.id}}">
-                    <input type="submit" value="Remove">
+                    <input type="submit" value="Remove" class="btn btn-danger">
                 </form>
             </td>
         </tr>

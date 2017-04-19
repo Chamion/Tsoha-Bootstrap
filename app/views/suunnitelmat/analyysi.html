@@ -13,45 +13,52 @@
 </script>
 <h1>View results</h1><br>
 <form method="POST" action="{{base_path}}/analyysi">
-    Use results from<br>
-    <input id='inputGroupAll' type="radio" name="group" value="all" onclick="hide('groups_table')"> All of my groups<br>
-    <input id='inputGroupMe' type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
-    <input id='inputGroupCustom' type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
-    <table id="groups_table" hidden>
-        <thead>
-            <tr>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for group in groups %}
-            <tr>
-                <td>
-                    <input id="group{{group.id}}" type="checkbox" name="{{group.id}}" class="group_checkbox"> {{group.name}}<br>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table><br>
-    Show<br>
-    <input id='inputClassAll' type="radio" name="class" value="all" onclick="hide('hero');">All class winrates<br>
-    <input id='inputClassFor' type="radio" name="class" value="for" onclick="show('hero');">Matchups for a class<br>
-    <select id="hero" name="hero" hidden>
-        <option value="1">Warrior</option>
-        <option value="2">Shaman</option>
-        <option value="3">Rogue</option>
-        <option value="4">Paladin</option>
-        <option value="5">Hunter</option>
-        <option value="6">Druid</option>
-        <option value="7">Warlock</option>
-        <option value="8">Mage</option>
-        <option value="9">Priest</option>
-    </select>
-    <br>
-    <input type="submit" value="Refresh">
+    <div class="panel panel-default">
+        <div class="panel-heading">Use results from</div>
+        <div class="panel-body">
+            <input id='inputGroupAll' type="radio" name="group" value="all" onclick="hide('groups_table')"> All of my groups<br>
+            <input id='inputGroupMe' type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
+            <input id='inputGroupCustom' type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
+            <table id="groups_table" class="table table-condensed" hidden>
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                    <tr>
+                        <td>
+                            <input id="group{{group.id}}" type="checkbox" name="{{group.id}}" class="group_checkbox"> {{group.name}}<br>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Show</div>
+        <div class="panel-body">
+            <input id='inputClassAll' type="radio" name="class" value="all" onclick="hide('hero');">All class winrates<br>
+            <input id='inputClassFor' type="radio" name="class" value="for" onclick="show('hero');">Matchups for a class<br>
+            <select id="hero" name="hero" hidden>
+                <option value="1">Warrior</option>
+                <option value="2">Shaman</option>
+                <option value="3">Rogue</option>
+                <option value="4">Paladin</option>
+                <option value="5">Hunter</option>
+                <option value="6">Druid</option>
+                <option value="7">Warlock</option>
+                <option value="8">Mage</option>
+                <option value="9">Priest</option>
+            </select>
+        </div>
+    </div>
+    <input type="submit" value="Refresh" class="btn btn-lg">
 </form>
 <br><br>
-<table class="table forum table-striped table-hover">
+<table class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>
@@ -115,5 +122,5 @@
 </script>
 {% endfor %}
 <br><br>
-<a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+<a href="{{base_path}}/paasivu" class="btn btn-default">Back to main page</a>
 {% endblock %}

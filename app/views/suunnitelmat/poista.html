@@ -11,7 +11,7 @@
         x.style.display = 'block';
     }
 </script>
-<a href="{{base_path}}/kirjaus" class="btn btn-primary btn-lg">Back to Logging</a><br>
+<a href="{{base_path}}/kirjaus" class="btn btn-default">Back to Logging</a><br>
 <h1>Delete results</h1><br>
 <p>Page {{gamePage}} of {{maxGamePage}}</p>
 <form method="POST" action="{{base_path}}/logging/remove">
@@ -63,13 +63,13 @@
             <td>
                 <form method="POST" action="{{base_path}}/edit">
                     <input type="hidden" name="id" value="{{game.id}}">
-                    <input type="submit" value="Edit">
+                    <input type="submit" value="Edit" class="btn btn-default">
                 </form>
             </td>
             <td>
                 <form method="POST" action="{{base_path}}/poista">
                     <input type="hidden" name="id" value="{{game.id}}">
-                    <input type="submit" value="Delete">
+                    <input type="submit" value="Delete" class="btn btn-default">
                 </form>
             </td>
         </tr>

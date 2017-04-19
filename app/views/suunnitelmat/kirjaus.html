@@ -4,39 +4,52 @@
 <h1>Log results</h1>
 <br>
 <form method="POST" action="{{base_path}}/kirjaus">
-    Class:<br>
-    <select id="hero" name="hero">
-        <option value="1">Warrior</option>
-        <option value="2">Shaman</option>
-        <option value="3">Rogue</option>
-        <option value="4">Paladin</option>
-        <option value="5">Hunter</option>
-        <option value="6">Druid</option>
-        <option value="7">Warlock</option>
-        <option value="8">Mage</option>
-        <option value="9">Priest</option>
-    </select><br>
-    Opponent:<br>
-    <select id="opponent" name="opponent">
-        <option value="1">Warrior</option>
-        <option value="2">Shaman</option>
-        <option value="3">Rogue</option>
-        <option value="4">Paladin</option>
-        <option value="5">Hunter</option>
-        <option value="6">Druid</option>
-        <option value="7">Warlock</option>
-        <option value="8">Mage</option>
-        <option value="9">Priest</option>
-    </select><br>
-    <input id="win" type="radio" name="win" value="win"> Win <br>
-    <input id="loss" type="radio" name="win" value="loss"> Loss <br>
-    <input id="legend" type="checkbox" name="legend"> Legend<br>
-    <input type="submit" value="Submit result">
+    <div class="form-inline">
+        <div class="input-group">
+            <span class="input-group-addon">Class</span>
+            <select id="hero" name="hero" class="form-control">
+                <option value="1">Warrior</option>
+                <option value="2">Shaman</option>
+                <option value="3">Rogue</option>
+                <option value="4">Paladin</option>
+                <option value="5">Hunter</option>
+                <option value="6">Druid</option>
+                <option value="7">Warlock</option>
+                <option value="8">Mage</option>
+                <option value="9">Priest</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="form-inline">
+        <div class="input-group">
+            <span class="input-group-addon">Opponent</span>
+            <select id="opponent" name="opponent" class="form-control">
+                <option value="1">Warrior</option>
+                <option value="2">Shaman</option>
+                <option value="3">Rogue</option>
+                <option value="4">Paladin</option>
+                <option value="5">Hunter</option>
+                <option value="6">Druid</option>
+                <option value="7">Warlock</option>
+                <option value="8">Mage</option>
+                <option value="9">Priest</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="form-inline">
+        <input id="win" type="radio" name="win" value="win" class="form-control"> Win<br>
+        <input id="loss" type="radio" name="win" value="loss" class="form-control"> Loss<br>
+        <input id="legend" type="checkbox" name="legend" class="form-control"> Legend<br>
+    </div>
+    <br>
+    <input type="submit" value="Submit result" class="btn btn-primary">
 </form>
+<br>
+<a href="{{base_path}}/poista" class="btn btn-danger">Remove a logged result</a>
 <br><br>
-<a href="{{base_path}}/poista">Remove a logged result</a>
-<br><br>
-<a href="{{base_path}}/paasivu" class="btn btn-primary btn-lg">Back to main page</a>
+<a href="{{base_path}}/paasivu" class="btn btn-default">Back to main page</a>
 <div hidden>
     <!--Hirveä hakkaus, jolla saadaan parametrit luettua javascriptin sisällä.-->
     <p id="heroIn" title="{{hero}}"></p>

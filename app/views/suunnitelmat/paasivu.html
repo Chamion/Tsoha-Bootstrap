@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <span>Logged in as {{player.username}}    </span><a href="{{base_path}}/logout" class="btn btn-primary btn-lg">Log out</a>
-  <br><br>
-  <a href="{{base_path}}/kirjaus" class="btn btn-primary btn-lg">Log results</a>
-  <br><br>
-  <a href="{{base_path}}/analyysi" class="btn btn-primary btn-lg">View results</a>
-  <br><br>
-  <a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Manage groups</a>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div style="float: left;">Logged in as {{player.username}}</div>
+        <div style="float: right;"><a href="{{base_path}}/logout" class="btn btn-default">Log out</a></div>
+        <br><br>
+    </div>
+    <div class="panel-body">
+        <a href="{{base_path}}/kirjaus" class="btn btn-primary btn-group-justified">Log results</a>
+        <br><br>
+        <a href="{{base_path}}/analyysi" class="btn btn-primary btn-group-justified">View results</a>
+        <br><br>
+        <a href="{{base_path}}/ryhmat" class="btn btn-primary  btn-group-justified">Manage groups</a>
+    </div>
+</div>
 {% endblock %}

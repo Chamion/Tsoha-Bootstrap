@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a href="{{base_path}}/ryhmat" class="btn btn-primary btn-lg">Back to Groups</a><br>
+<a href="{{base_path}}/ryhmat" class="btn btn-default">Back to Groups</a><br>
 <h1>{{team.name}}</h1><br>
-<a href="{{base_path}}/leave">Leave group</a>
+<a href="{{base_path}}/leave" class="btn btn-danger">Leave group</a>
 <div id="memberPage" hidden>{{memberPage}}</div>
 <div id="maxMemberPage" hidden>{{maxMemberPage}}</div>
 <table class="table forum table-striped table-hover">

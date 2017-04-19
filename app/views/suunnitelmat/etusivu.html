@@ -8,12 +8,20 @@
     }
 </script>
 <form method="POST" action="{{base_path}}/etusivu">
-    Username:<br>
-    <input id="usernameIn" type="text" name="username" value="{{usernameInput}}"><br>
-    Password:<br>
-    <input type="password" name="password"><br>
+    <div class="form-inline">
+        <div class="input-group">
+            <span class="input-group-addon">Username</span>
+            <input id="usernameIn" type="text" name="username" value="{{usernameInput}}" class="form-control">
+        </div>
+        <br><br>
+        <div class="input-group">
+            <span class="input-group-addon">Password</span>
+            <input type="password" name="password" class="form-control">
+        </div>
+    </div>
+    <br>
     <input type="hidden" name="register" value="false">
-    <input type="submit" value="Log in" class="btn btn-primary btn-lg">
+    <input type="submit" value="Log in" class="btn">
     <div id="loginError"></div>
 </form>
 <script>
@@ -22,17 +30,25 @@
     }
 </script>
 <br>
-<button onclick="show('register')">
+<button onclick="show('register')" class="btn">
     Register
 </button>
 <p id="errorMessage">{{error}}</p>
 <form id="register" method="POST" action="{{base_path}}/etusivu" hidden>
-    Username:<br>
-    <input id="registerUsername" type="text" name="username" value="{{registerUsernameInput}}"><br>
-    Password:<br>
-    <input type="password" name="password"><br>
+    <div class="form-inline">
+        <div class="input-group">
+            <span class="input-group-addon">Username</span>
+            <input id="registerUsername" type="text" name="username" value="{{registerUsernameInput}}" class="form-control">
+        </div>
+        <br><br>
+        <div class="input-group">
+            <span class="input-group-addon">Password</span>
+            <input type="password" name="password" class="form-control">
+        </div>
+    </div>
+    <br>
     <input type="hidden" name="register" value="true">
-    <input type="submit" value="Register" class="btn btn-primary btn-lg">
+    <input type="submit" value="Register" class="btn">
 </form>
 <script>
     var error = document.getElementById('errorMessage').innerHTML;
