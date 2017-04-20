@@ -32,6 +32,18 @@ class TeamModel extends BaseModel{
         return $teams;
     }
     
+    public static function findAllByMember($member){
+        $query = DB::connection()->prepare('SELECT Team.id AS id, Team.group_name AS name FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND Membership.accepted;');
+        $query->execute(array('member' => $member));
+        $rows = $query->fetchAll();
+        
+        $teams = array();
+        foreach ($rows as $row){
+            $teams[] = new ListTeam($row['id'], $row['name']);
+        }
+        return $teams;
+    }
+    
     public static function findInvites($member, $page){
         $query = DB::connection()->prepare('SELECT Team.id AS id, Team.group_name AS name FROM Team, Membership WHERE Membership.team = Team.id AND Membership.player = :member AND NOT Membership.accepted LIMIT 10 OFFSET :offset;');
         $query->execute(array('member' => $member, 'offset' => ($page-1)*10));

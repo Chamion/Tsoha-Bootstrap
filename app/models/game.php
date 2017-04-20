@@ -130,6 +130,36 @@ class GameModel extends BaseModel {
         }
         return $pages;
     }
+    
+    public static function inputsById($id){
+        $query = DB::connection()->prepare('SELECT * FROM Game WHERE id = :id');
+        $query->execute(array('id' => $id));
+        $row = $query->fetch();
+
+        if ($row) {
+            $inputs = array(
+                'hero' => $row['hero'],
+                'opponent' => $row['opponent']
+            );
+            if($row['legend']){
+                $inputs['legend'] = 1;
+            }else{
+                $inputs['legend'] = 0;
+            }
+            if($row['win']){
+                $inputs['win'] = 1;
+            }else{
+                $inputs['win'] = 0;
+            }
+            return $inputs;
+        }
+        return array(
+            'legend' => 1,
+            'win' => 1,
+            'hero' => 1,
+            'opponent' => 1
+        );
+    }
 }
 
 function classNumberToString($number){

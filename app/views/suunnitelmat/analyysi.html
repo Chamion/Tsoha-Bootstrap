@@ -19,22 +19,19 @@
             <input id='inputGroupAll' type="radio" name="group" value="all" onclick="hide('groups_table')"> All of my groups<br>
             <input id='inputGroupMe' type="radio" name="group" value="me" onclick="hide('groups_table')"> Only me<br>
             <input id='inputGroupCustom' type="radio" name="group" value="custom" onclick="show('groups_table')"> Choose groups<br>
-            <table id="groups_table" class="table table-condensed" hidden>
-                <thead>
-                    <tr>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for group in groups %}
-                    <tr>
-                        <td>
-                            <input id="group{{group.id}}" type="checkbox" name="{{group.id}}" class="group_checkbox"> {{group.name}}<br>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <style>
+                ul.groupsInput {
+                    columns: 4;
+                    list-style-type: none;
+                }
+            </style>
+            <ul id="groups_table" class="groupsInput" hidden>
+                {% for group in groups %}
+                <li>
+                    <input id="group{{group.id}}" type="checkbox" name="{{group.id}}" class="group_checkbox"> {{group.name}}<br>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     <div class="panel panel-default">

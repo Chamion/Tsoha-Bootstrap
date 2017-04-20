@@ -87,7 +87,7 @@ class GameController extends BaseController {
             );
         }
         $player = $_SESSION['player'];
-        $allGroups = TeamModel::findByMember($player, 1);
+        $allGroups = TeamModel::findAllByMember($player);
         if ($_SESSION['statsInput']['class'] == 'all') {
             if ($_SESSION['statsInput']['group'] == 'all') {
                 $groupIds = array();
@@ -118,13 +118,7 @@ class GameController extends BaseController {
 
     public static function editInit() {
         self::check_logged_in();
-        $game = GameModel::findById($_POST['id']);
-        $_SESSION['gameInput'] = array(
-            'legend' => $game->legend,
-            'win' => $game->win,
-            'hero' => $game->hero,
-            'opponent' => $game->opponent
-        );
+        $_SESSION['gameInput'] = GameModel::inputsById($_POST['id']);
         $_SESSION['gameId'] = $_POST['id'];
         Redirect::to('/edit');
     }
