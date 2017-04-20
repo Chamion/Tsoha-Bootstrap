@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script>
+    function hide(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'none';
+    }
+    function show(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'block';
+    }
+</script>
 <a href="{{base_path}}/ryhmat" class="btn btn-default">Back to Groups</a><br>
 <h1>{{team.name}}</h1><br>
-<a href="{{base_path}}/leave" class="btn btn-danger">Leave group</a>
+<button id="leaveButton" onclick="show('confirmation'); show('yesButton'); show('noButton'); hide('leaveButton');" class="btn btn-danger">Leave group</button>
+<p id="confirmation" hidden>Are you sure?</p>
+<a id="yesButton" href="{{base_path}}/leave" class="btn btn-success" hidden>Yes</a>
+<button id="noButton" class="btn btn-danger" onclick="show('leaveButton'); hide('confirmation'); hide('yesButton'); hide('noButton');" hidden>No</button>
+<script>
+    hide('yesButton');
+    hide('noButton');
+    document.getElementById('yesButton').style.width = '100px';
+    document.getElementById('noButton').style.width = '100px';
+</script>
 <div id="memberPage" hidden>{{memberPage}}</div>
 <div id="maxMemberPage" hidden>{{maxMemberPage}}</div>
 <table class="table forum table-striped table-hover">

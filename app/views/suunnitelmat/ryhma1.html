@@ -10,11 +10,19 @@
             x.style.display = 'none';
         }
     }
+    function hide(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'none';
+    }
+    function show(id) {
+        var x = document.getElementById(id);
+        x.style.display = 'block';
+    }
 </script>
 <a href="{{base_path}}/ryhmat" class="btn btn-default">Back to Groups</a><br>
 <h1>{{team.name}}</h1>
 <h2 id="joinId">Join id: {{team.id}}</h2>
-<button onclick="toggle('settings'); toggle('disband')" class="btn">Group settings</button>
+<button onclick="toggle('settings'); toggle('disbandButton'); hide('disband'); hide('noButton');" class="btn">Group settings</button>
 <form id="settings" method="POST" action="{{base_path}}/group/settings">
     <br>
     <div id="teamClosed" hidden>{{team.closed}}</div>
@@ -24,13 +32,19 @@
     </div>
 </form>
 <br>
+<button id="disbandButton" class="btn btn-danger" onclick="show('disband'); show('noButton');">Disband group</button>
 <form id="disband" hidden method="POST" action="{{base_path}}/group/disband">
     <input type="hidden" name="id" value="{{team.id}}">
-    <input class="btn btn-danger" type="submit" value="Disband group">
+    Are you sure?<br>
+    <input id="yesButton" class="btn btn-success" type="submit" value="Yes">
 </form>
+<button id="noButton" class="btn btn-danger" onclick="hide('disband'); hide('noButton');" hidden>No</button>
 <script>
     document.getElementById('settings').style.display = 'none';
-    document.getElementById('disband').style.display = 'none';
+    document.getElementById('disbandButton').style.display = 'none';
+    document.getElementById('yesButton').style.width = '100px';
+    document.getElementById('noButton').style.width = '100px';
+    hide('noButton');
     if(document.getElementById('teamClosed').innerHTML == '1'){
         document.getElementById('closeIn').disabled = 'disabled';
         document.getElementById('closeIn').classList.add('btn-primary');
