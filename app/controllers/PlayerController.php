@@ -37,15 +37,12 @@ class PlayerController extends BaseController{
     }
     
     public static function register($username, $password){
-        if(PlayerModel::nameAvailable($username)){
-            //Luodaan uusi PlayerModel olio aina, kun rekisteröidään uusi player. Refaktoroinnin tarvetta.
-            $model = new PlayerModel($username, $password);
-            if(count($model->errors) > 0){
-                $_SESSION['registerUsernameInput'] = $username;
-                $_SESSION['errors'] = $model->errors;
-            }else{
-                $model->addPlayer($username, $password);
-            }
+        $model = new PlayerModel($username, $password);
+        if(count($model->errors) > 0){
+            $_SESSION['registerUsernameInput'] = $username;
+            $_SESSION['errors'] = $model->errors;
+        }else{
+            $model->addPlayer($username, $password);
         }
         Redirect::to('/etusivu');
     }

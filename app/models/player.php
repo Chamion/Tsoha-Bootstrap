@@ -91,6 +91,9 @@ class PlayerModel extends BaseModel{
         if(strlen($this->username)>32){
             $errors[] = 'Username must be 32 characters or shorter.';
         }
+        if(!self::nameAvailable($this->username)){
+            $errors[] = 'Username is already in use.';
+        }
         return $errors;
     }
     

@@ -135,17 +135,22 @@ class TeamModel extends BaseModel{
     }
     
     public static function joinOpen($player, $team){
+        if(!ctype_digit($team)){
+            return 'Input must be an integer.';
+        }
         if(self::findById($team) == null){
-            return;
+            return 'No group found for the specified ID.';
         }
         if(self::isInvited($player, $team)){
-            return;
+            self::join($player, $team);
+            return '';
         }
         if(self::isClosed($team)){
-            return;
+            return 'The specified group is invite-only.';
         }
         $query = DB::connection()->prepare('INSERT INTO Membership (player, team, accepted) VALUES (:player, :team, true);');
         $query->execute(array('player' => $player, 'team' => $team));
+        return '';
     }
     
     public static function isInvited($player, $team){
@@ -169,7 +174,7 @@ class TeamModel extends BaseModel{
     }
     
     public static function destroy($team){
-        $memberQuery = DB::connection()->prepare('DELETE FROM Member WHERE team = :team;');
+        $memberQuery = DB::connection()->prepare('DELETE FROM Membership WHERE team = :team;');
         $memberQuery->execute(array('team' => $team));
         $teamQuery = DB::connection()->prepare('DELETE FROM Team WHERE id = :team');
         $teamQuery->execute(array('team' => $team));

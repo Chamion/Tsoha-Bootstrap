@@ -30,6 +30,10 @@ class TeamController extends BaseController{
             unset($_SESSION['groupNameInput']);
             unset($_SESSION['errors']);
         }
+        if(isset($_SESSION['joinError'])){
+            $params['joinError'] = $_SESSION['joinError'];
+            unset($_SESSION['joinError']);
+        }
         View::make('suunnitelmat/ryhmat.html', $params);
     }
     
@@ -162,16 +166,12 @@ class TeamController extends BaseController{
     }
     
     public static function joinOpen(){
-        if(!ctype_digit($_POST['joinId'])){
-            Redirect::to('/ryhmat');
-            return;
-        }
-        TeamModel::joinOpen($_SESSION['player'], $_POST['joinId']);
+        $_SESSION['joinError'] = TeamModel::joinOpen($_SESSION['player'], $_POST['joinId']);
         Redirect::to('/ryhmat');
     }
     
     public static function disband(){
-        //Toteuttamatta
+        TeamModel::destroy($_POST['id']);
+        Redirect::to('/ryhmat');
     }
 }
-

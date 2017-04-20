@@ -111,3 +111,7 @@ $routes->post('/groups/join_open', function() {
 $routes->post('/group/settings', function() {
     TeamController::setClosed();
 });
+
+$routes->post('/group/disband', function() {
+    TeamController::disband();
+});

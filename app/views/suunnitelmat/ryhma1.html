@@ -23,7 +23,11 @@
         <input id="openIn" type="submit" name="closed" value="Open" class="btn">
     </div>
 </form>
-<br><button id="disband" class="btn btn-danger" hidden>Disband group (unimplemented)</button>
+<br>
+<form id="disband" hidden method="POST" action="{{base_path}}/group/disband">
+    <input type="hidden" name="id" value="{{team.id}}">
+    <input class="btn btn-danger" type="submit" value="Disband group">
+</form>
 <script>
     document.getElementById('settings').style.display = 'none';
     document.getElementById('disband').style.display = 'none';

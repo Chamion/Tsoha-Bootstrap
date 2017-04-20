@@ -10,14 +10,21 @@
                     <input type="text" name="groupName" value="{{groupNameInput}}" placeholder="Group name" class="form-control">
                     <span class="input-group-btn"><input type="submit" value="Create new group" class="btn"></span>
                 </div>
+                <div id="errorAlert" class="alert alert-danger alert-dismissable fade in" hidden>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <div id="errorMessage">{{error}}</div>
+                </div>
             </div>
-            <p id="errorMessage">{{error}}</p>
         </form><br>
         <form method="POST" action="{{base_path}}/groups/join_open">
             <div class="form-inline">
                 <div class="input-group">
                     <input type="text" name="joinId" placeholder="join ID" class="form-control">
                     <span class="input-group-btn"><input type="submit" value="Join team" class="btn"></span>
+                </div>
+                <div id="joinErrorAlert" class="alert alert-danger alert-dismissable fade in" hidden>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <div id="joinErrorMessage">{{joinError}}</div>
                 </div>
             </div>
         </form>
@@ -123,11 +130,12 @@
 <a href="{{base_path}}/paasivu" class="btn btn-default">Back to main page</a>
 <script>
     var error = document.getElementById('errorMessage').innerHTML;
-    if(error == ''){
-        hide('errorMessage');
-    }else{
-        show('createGroup');
-        hide('createButton');
+    if(error != ''){
+        document.getElementById('errorAlert').style.display = 'block';
+    }
+    var error = document.getElementById('joinErrorMessage').innerHTML;
+    if(error != ''){
+        document.getElementById('joinErrorAlert').style.display = 'block';
     }
 </script>
 {% endblock %}
