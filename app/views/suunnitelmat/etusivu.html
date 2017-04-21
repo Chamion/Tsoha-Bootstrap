@@ -6,8 +6,11 @@
         var x = document.getElementById(id);
         x.style.display = 'block';
     }
+    function setWidth(id, width) {
+        var x = document.getElementById(id).style.width = width;
+    }
 </script>
-<form method="POST" action="{{base_path}}/etusivu">
+<form method="POST" action="{{base_path}}/login">
     <div class="form-inline">
         <div class="input-group">
             <span class="input-group-addon">Username</span>
@@ -44,7 +47,7 @@
     <div id="errorMessage">{{error}}</div>
 </div>
 <br>
-<form id="register" method="POST" action="{{base_path}}/etusivu" hidden>
+<form id="register" method="POST" action="{{base_path}}/login" hidden>
     <div class="form-inline">
         <div class="input-group">
             <span class="input-group-addon">Username</span>
@@ -66,5 +69,10 @@
         show('errorAlert');
         show('register');
     }
+</script>
+<script>
+    var alertWidth = '300px';
+    setWidth('loginAlert', alertWidth);
+    setWidth('errorAlert', alertWidth);
 </script>
 {% endblock %}

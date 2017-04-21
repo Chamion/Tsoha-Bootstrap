@@ -48,7 +48,7 @@ class TeamController extends BaseController{
         }else{
             TeamModel::addTeam($player, $params['groupName']);
         }
-        Redirect::to('/ryhmat');
+        Redirect::to('/groups');
     }
     
     public static function teamPageInit(){
@@ -101,13 +101,13 @@ class TeamController extends BaseController{
         } else {
             TeamModel::severMembership($toKick, $team->id);
         }
-        Redirect::to('/ryhma1');
+        Redirect::to('/groups/group');
     }
     
     public static function leave(){
         self::check_logged_in();
         TeamModel::severMembership($_SESSION['player'], $_SESSION['teamId']);
-        TeamController::managePage();
+        Redirect::to('/groups');
     }
     
     public static function invite(){
@@ -116,7 +116,7 @@ class TeamController extends BaseController{
         if($player != null){
             TeamModel::invite($_SESSION['teamId'], $player->id);
         }
-        Redirect::to('/ryhma1');
+        Redirect::to('/groups/group');
     }
     
     public static function inviteChoice(){
@@ -126,13 +126,13 @@ class TeamController extends BaseController{
         } else {
             TeamModel::severMembership($_SESSION['player'], $_POST['team']);
         }
-        Redirect::to('/ryhmat');
+        Redirect::to('/groups');
     }
     
     public static function setClosed(){
         $value = $_POST['closed'] == 'Invite-only';
         TeamModel::setClosed($_SESSION['teamId'], $value);
-        Redirect::to('/ryhma1');
+        Redirect::to('/groups/group');
     }
     
     public static function manageSetPage(){
@@ -141,7 +141,7 @@ class TeamController extends BaseController{
         }else{
             self::manageFlipPage('invitePage');
         }
-        Redirect::to('/ryhmat');
+        Redirect::to('/groups');
     }
     
     public static function manageFlipPage($list){
@@ -162,16 +162,16 @@ class TeamController extends BaseController{
         }else{
             self::manageFlipPage('inviteePage');
         }
-        Redirect::to('/ryhma1');
+        Redirect::to('/groups/group');
     }
     
     public static function joinOpen(){
         $_SESSION['joinError'] = TeamModel::joinOpen($_SESSION['player'], $_POST['joinId']);
-        Redirect::to('/ryhmat');
+        Redirect::to('/groups');
     }
     
     public static function disband(){
         TeamModel::destroy($_POST['id']);
-        Redirect::to('/ryhmat');
+        Redirect::to('/groups');
     }
 }

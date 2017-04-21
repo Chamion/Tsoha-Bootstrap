@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Log results</h1>
 <br>
-<form method="POST" action="{{base_path}}/kirjaus">
+<form method="POST" action="{{base_path}}/logging">
     <div class="form-inline">
         <div class="input-group">
             <span class="input-group-addon">Class</span>
@@ -47,9 +47,9 @@
     <input type="submit" value="Submit result" class="btn btn-primary">
 </form>
 <br>
-<a href="{{base_path}}/poista" class="btn btn-danger">Remove a logged result</a>
+<a href="{{base_path}}/logging/list" class="btn btn-danger">Remove a logged result</a>
 <br><br>
-<a href="{{base_path}}/paasivu" class="btn btn-default">Back to main page</a>
+<a href="{{base_path}}/main" class="btn btn-default">Back to main page</a>
 <div hidden>
     <!--Hirveä hakkaus, jolla saadaan parametrit luettua javascriptin sisällä.-->
     <p id="heroIn" title="{{hero}}"></p>

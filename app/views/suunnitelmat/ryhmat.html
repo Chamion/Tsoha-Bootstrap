@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script>
+    function setWidth(id, width) {
+        var x = document.getElementById(id).style.width = width;
+    }
+</script>
 <h1>Manage groups</h1><br>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form method="POST" action="{{base_path}}/ryhmat">
+        <form method="POST" action="{{base_path}}/groups">
             <div class="form-inline">
                 <div class="input-group">
                     <input type="text" name="groupName" value="{{groupNameInput}}" placeholder="Group name" class="form-control">
@@ -58,7 +63,7 @@
         {% for team in teams %}
         <tr>
             <td>
-                <form method="POST" action="{{base_path}}/ryhma1">
+                <form method="POST" action="{{base_path}}/groups/group">
                     <input type="hidden" name="teamId" value="{{team.id}}">
                     <input type="submit" value="{{team.name}}" class="btn btn-default">
                 </form>
@@ -94,7 +99,7 @@
                 <h3>{{team.name}}</h3>
             </td>
             <td>
-                <form method="POST" action="{{base_path}}/join">
+                <form method="POST" action="{{base_path}}/groups/join">
                     <input type="hidden" name="team" value="{{team.id}}">
                     <input type="submit" name="inviteChoice" value="Accept" class="btn btn-success"> 
                     <input type="submit" name="inviteChoice" value="Reject" class="btn btn-danger">
@@ -127,7 +132,7 @@
     }
 </script>
 <br><br>
-<a href="{{base_path}}/paasivu" class="btn btn-default">Back to main page</a>
+<a href="{{base_path}}/main" class="btn btn-default">Back to main page</a>
 <script>
     var error = document.getElementById('errorMessage').innerHTML;
     if(error != ''){
@@ -137,5 +142,10 @@
     if(error != ''){
         document.getElementById('joinErrorAlert').style.display = 'block';
     }
+</script>
+<script>
+    var alertWidth = '300px';
+    setWidth('errorAlert', alertWidth);
+    setWidth('joinErrorAlert', alertWidth);
 </script>
 {% endblock %}

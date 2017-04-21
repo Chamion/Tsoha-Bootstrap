@@ -24,7 +24,7 @@ class PlayerController extends BaseController{
         $id = PlayerModel::login($params['username'], $params['password']);
         if($id == 0){
             $_SESSION['usernameInput'] = $params['username'];
-            Redirect::to('/etusivu');
+            Redirect::to('/login');
             return;
         }
         session_unset();
@@ -33,7 +33,7 @@ class PlayerController extends BaseController{
         $_SESSION['player'] = $id;
         $_SESSION['gameInput'] = null;
         $_SESSION['statsInput'] = null;
-        Redirect::to('/paasivu');
+        Redirect::to('/main');
     }
     
     public static function register($username, $password){
@@ -44,7 +44,7 @@ class PlayerController extends BaseController{
         }else{
             $model->addPlayer($username, $password);
         }
-        Redirect::to('/etusivu');
+        Redirect::to('/login');
     }
     
     public static function navPage(){
@@ -57,7 +57,7 @@ class PlayerController extends BaseController{
         self::check_logged_in();
         session_unset();
         session_destroy();
-        Redirect::to('/etusivu');
+        Redirect::to('/login');
     }
 }
 

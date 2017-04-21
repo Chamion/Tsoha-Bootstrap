@@ -19,7 +19,7 @@ class GameController extends BaseController {
         self::check_logged_in();
         $params = $_POST;
         GameModel::removeById($params['id']);
-        Redirect::to('/poista');
+        Redirect::to('/logging/list');
     }
 
     public static function loggingPage() {
@@ -55,7 +55,7 @@ class GameController extends BaseController {
             'hero' => $_POST['hero'],
             'opponent' => $_POST['opponent']
         );
-        Redirect::to('/kirjaus');
+        Redirect::to('/logging');
     }
 
     public static function statsRefresh() {
@@ -75,7 +75,7 @@ class GameController extends BaseController {
         if ($_SESSION['statsInput']['class'] == 'for') {
             $_SESSION['statsInput']['hero'] = $_POST['hero'];
         }
-        Redirect::to('/analyysi');
+        Redirect::to('/analysis');
     }
 
     public static function stats() {
@@ -120,7 +120,7 @@ class GameController extends BaseController {
         self::check_logged_in();
         $_SESSION['gameInput'] = GameModel::inputsById($_POST['id']);
         $_SESSION['gameId'] = $_POST['id'];
-        Redirect::to('/edit');
+        Redirect::to('/logging/list/edit');
     }
 
     public static function editPage() {
@@ -148,7 +148,7 @@ class GameController extends BaseController {
             'opponent' => $_POST['opponent']
         );
         unset($_SESSION['gameId']);
-        Redirect::to('/poista');
+        Redirect::to('/logging/list');
     }
     
     public static function removeFlipPage(){
@@ -161,6 +161,6 @@ class GameController extends BaseController {
         }else {
             $_SESSION['gamePage'] = -1;
         }
-        Redirect::to('/poista');
+        Redirect::to('/logging/list');
     }
 }

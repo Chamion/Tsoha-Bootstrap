@@ -11,11 +11,11 @@
         x.style.display = 'block';
     }
 </script>
-<a href="{{base_path}}/ryhmat" class="btn btn-default">Back to Groups</a><br>
+<a href="{{base_path}}/groups" class="btn btn-default">Back to Groups</a><br>
 <h1>{{team.name}}</h1><br>
 <button id="leaveButton" onclick="show('confirmation'); show('yesButton'); show('noButton'); hide('leaveButton');" class="btn btn-danger">Leave group</button>
 <p id="confirmation" hidden>Are you sure?</p>
-<a id="yesButton" href="{{base_path}}/leave" class="btn btn-success" hidden>Yes</a>
+<a id="yesButton" href="{{base_path}}/groups/group/leave" class="btn btn-success" hidden>Yes</a>
 <button id="noButton" class="btn btn-danger" onclick="show('leaveButton'); hide('confirmation'); hide('yesButton'); hide('noButton');" hidden>No</button>
 <script>
     hide('yesButton');
@@ -35,7 +35,7 @@
                 <p>Page {{memberPage}} of {{maxMemberPage}}</p>
             </th>
             <th>
-                <form method="POST" action="{{base_path}}/group/pageflip">
+                <form method="POST" action="{{base_path}}/groups/group/pageflip">
                     <input type="hidden" name="list" value="member">
                     <input id="memberFirst" type="submit" name="button" value="first">
                     <input id="memberPrevious" type="submit" name="button" value="previous">

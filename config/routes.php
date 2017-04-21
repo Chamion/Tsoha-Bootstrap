@@ -8,83 +8,87 @@ $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
 });
 
-$routes->get('/etusivu', function() {
+$routes->get('/login', function() {
     PlayerController::loginPage();
 });
 
-$routes->post('/etusivu', function() {
+$routes->post('/login', function() {
     PlayerController::login();
 });
 
-$routes->get('/paasivu', function() {
+$routes->get('/main', function() {
     PlayerController::navPage();
 });
 
-$routes->get('/kirjaus', function() {
+$routes->get('/logging', function() {
     GameController::loggingPage();
 });
 
-$routes->post('/kirjaus', function() {
+$routes->post('/logging', function() {
     GameController::addResult();
 });
 
-$routes->get('/ryhmat', function() {
+$routes->get('/groups', function() {
     TeamController::managePage();
 });
 
-$routes->post('/ryhmat', function() {
+$routes->post('/groups', function() {
     TeamController::create();
 });
 
-$routes->get('/analyysi', function() {
+$routes->get('/analysis', function() {
     GameController::stats();
 });
 
-$routes->post('/analyysi', function() {
+$routes->post('/analysis', function() {
     GameController::statsRefresh();
 });
 
-$routes->get('/poista', function() {
+$routes->get('/logging/list', function() {
     GameController::removeList();
 });
 
-$routes->post('/poista', function() {
+$routes->post('/logging/list', function() {
     GameController::remove();
 });
 
-$routes->get('/ryhma1', function() {
+$routes->get('/groups/group', function() {
     TeamController::teamPage();
 });
 
-$routes->post('/ryhma1', function() {
+$routes->post('/groups/group', function() {
     TeamController::teamPageInit();
 });
 
-$routes->post('/kick', function() {
+$routes->post('/groups/group/kick', function() {
    TeamController::kick(); 
 });
 
-$routes->get('/leave', function() {
+$routes->get('/groups/group/leave', function() {
     TeamController::leave();
 });
 
-$routes->post('/invite', function() {
+$routes->post('/groups/group/invite', function() {
     TeamController::invite();
 });
 
-$routes->post('/join', function() {
+$routes->post('/groups/join', function() {
     TeamController::inviteChoice();
 });
 
-$routes->post('/edit', function() {
+$routes->post('/logging/list/edit', function() {
     GameController::editInit();
 });
 
-$routes->get('/edit', function() {
+$routes->get('/logging/list/edit', function() {
     GameController::editPage();
 });
 
 $routes->post('/editSave', function() {
+    GameController::editSave();
+});
+
+$routes->post('/logging/list/edit/save', function() {
     GameController::editSave();
 });
 
@@ -96,7 +100,7 @@ $routes->post('/groups/pageflip', function() {
     TeamController::manageSetPage();
 });
 
-$routes->post('/group/pageflip', function(){
+$routes->post('/groups/group/pageflip', function(){
     TeamController::teamSetPage();
 });
 
@@ -104,14 +108,18 @@ $routes->post('/logging/remove', function(){
     GameController::removeFlipPage();
 });
 
+$routes->post('/logging/list/pageflip', function(){
+    GameController::removeFlipPage();
+});
+
 $routes->post('/groups/join_open', function() {
     TeamController::joinOpen();
 });
 
-$routes->post('/group/settings', function() {
+$routes->post('/groups/group/settings', function() {
     TeamController::setClosed();
 });
 
-$routes->post('/group/disband', function() {
+$routes->post('/groups/group/disband', function() {
     TeamController::disband();
 });
