@@ -2,6 +2,19 @@
 
 {% block content %}
 <h1>Log results</h1>
+<div>
+    <div id='submitAlert' class="alert alert-success alert-dismissable fade in" hidden>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <div>Result saved successfully.</div>
+    </div>
+</div>
+<script>
+    var submit = '{{submit}}';
+    if(submit == 'submit'){
+        document.getElementById('submitAlert').style.display = 'block';
+        document.getElementById('submitAlert').style.width = '300px';
+    }
+</script>
 <br>
 <form method="POST" action="{{base_path}}/logging">
     <div class="form-inline">
@@ -47,15 +60,15 @@
     <input type="submit" value="Submit result" class="btn btn-primary">
 </form>
 <br>
-<a href="{{base_path}}/logging/list" class="btn btn-danger">Remove a logged result</a>
+<a href="{{base_path}}/logging/list" class="btn btn-danger">Remove/Edit logged results</a>
 <br><br>
 <a href="{{base_path}}/main" class="btn btn-default">Back to main page</a>
 <div hidden>
     <!--Hirveä hakkaus, jolla saadaan parametrit luettua javascriptin sisällä.-->
-    <p id="heroIn" title="{{hero}}"></p>
-    <p id="opponentIn" title="{{opponent}}"></p>
-    <p id="winIn" title="{{win}}"></p>
-    <p id="legendIn" title="{{legend}}"></p>
+    <p id="heroIn" title="{{gameInput['hero']}}"></p>
+    <p id="opponentIn" title="{{gameInput['opponent']}}"></p>
+    <p id="winIn" title="{{gameInput['win']}}"></p>
+    <p id="legendIn" title="{{gameInput['legend']}}"></p>
 </div>
 <script>
     function set(id, value){

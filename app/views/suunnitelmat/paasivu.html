@@ -3,9 +3,7 @@
 {% block content %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <div style="float: left;">Logged in as {{player.username}}</div>
-        <div style="float: right;"><a href="{{base_path}}/logout" class="btn btn-default">Log out</a></div>
-        <br><br>
+        <div><h2>Logged in as {{player.username}}</h2></div>
     </div>
     <div class="panel-body">
         <a href="{{base_path}}/logging" class="btn btn-primary btn-group-justified">Log results</a>

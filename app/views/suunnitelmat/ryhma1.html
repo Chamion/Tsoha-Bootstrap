@@ -19,50 +19,59 @@
         x.style.display = 'block';
     }
 </script>
-<a href="{{base_path}}/groups" class="btn btn-default">Back to Groups</a><br>
-<h1>{{team.name}}</h1>
-<h2 id="joinId">Join id: {{team.id}}</h2>
-<button onclick="toggle('settings'); toggle('disbandButton'); hide('disband'); hide('noButton');" class="btn">Group settings</button>
-<form id="settings" method="POST" action="{{base_path}}/groups/group/settings">
-    <br>
-    <div id="teamClosed" hidden>{{team.closed}}</div>
-    <div class="btn-group">
-        <input id="closeIn" type="submit" name="closed" value="Invite-only" class="btn">
-        <input id="openIn" type="submit" name="closed" value="Open" class="btn">
-    </div>
-</form>
-<br>
-<button id="disbandButton" class="btn btn-danger" onclick="show('disband'); show('noButton');">Disband group</button>
-<form id="disband" hidden method="POST" action="{{base_path}}/groups/group/disband">
-    <input type="hidden" name="id" value="{{team.id}}">
-    Are you sure?<br>
-    <input id="yesButton" class="btn btn-success" type="submit" value="Yes">
-</form>
-<button id="noButton" class="btn btn-danger" onclick="hide('disband'); hide('noButton');" hidden>No</button>
-<script>
-    document.getElementById('settings').style.display = 'none';
-    document.getElementById('disbandButton').style.display = 'none';
-    document.getElementById('yesButton').style.width = '100px';
-    document.getElementById('noButton').style.width = '100px';
-    hide('noButton');
-    if(document.getElementById('teamClosed').innerHTML == '1'){
-        document.getElementById('closeIn').disabled = 'disabled';
-        document.getElementById('closeIn').classList.add('btn-primary');
-        document.getElementById('joinId').style.display = 'none';
-    }else{
-        document.getElementById('openIn').disabled = 'disabled';
-        document.getElementById('openIn').classList.add('btn-primary');
-    }
-</script>
-<form method="POST" action="{{base_path}}/groups/group/invite">
-    <br>
-    <div class="form-inline">
-        <div class="input-group">
-            <input type="text" name="player" placeholder="username to invite" class="form-control">
-            <span class="input-group-btn"><input type="submit" value="Invite" class="btn btn-primary"></span>
+<a href="{{base_path}}/groups" class="btn btn-default">Back to Groups</a>
+<br><br>
+<div class="panel panel-default">
+    <div class="page-header">
+        <h1>{{team.name}}</h1>
+        <div style="float: right; padding-right: 100px">
+            <h3 id="joinId">Join id: <strong>{{team.id}}</strong></h3>
         </div>
     </div>
-</form>
+    <div class="panel-body">
+        <button onclick="toggle('settings'); toggle('disbandButton'); hide('disband'); hide('noButton');" class="btn">Group settings</button>
+        <form id="settings" method="POST" action="{{base_path}}/groups/group/settings">
+            <br>
+            <div id="teamClosed" hidden>{{team.closed}}</div>
+            <div class="btn-group">
+                <input id="closeIn" type="submit" name="closed" value="Invite-only" class="btn">
+                <input id="openIn" type="submit" name="closed" value="Open" class="btn">
+            </div>
+        </form>
+        <br>
+        <button id="disbandButton" class="btn btn-danger" onclick="show('disband'); show('noButton');">Disband group</button>
+        <form id="disband" hidden method="POST" action="{{base_path}}/groups/group/disband">
+            <input type="hidden" name="id" value="{{team.id}}">
+            Are you sure?<br>
+            <input id="yesButton" class="btn btn-success" type="submit" value="Yes">
+        </form>
+        <button id="noButton" class="btn btn-danger" onclick="hide('disband'); hide('noButton');" hidden>No</button>
+        <script>
+            document.getElementById('settings').style.display = 'none';
+            document.getElementById('disbandButton').style.display = 'none';
+            document.getElementById('yesButton').style.width = '100px';
+            document.getElementById('noButton').style.width = '100px';
+            hide('noButton');
+            if(document.getElementById('teamClosed').innerHTML == '1'){
+                document.getElementById('closeIn').disabled = 'disabled';
+                document.getElementById('closeIn').classList.add('btn-primary');
+                document.getElementById('joinId').style.display = 'none';
+            }else{
+                document.getElementById('openIn').disabled = 'disabled';
+                document.getElementById('openIn').classList.add('btn-primary');
+            }
+        </script>
+        <form method="POST" action="{{base_path}}/groups/group/invite">
+            <br>
+            <div class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="player" placeholder="username to invite" class="form-control">
+                    <span class="input-group-btn"><input type="submit" value="Invite" class="btn btn-primary"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div id="memberPage" hidden>{{memberPage}}</div>
 <div id="inviteePage" hidden>{{inviteePage}}</div>
 <div id="maxMemberPage" hidden>{{maxMemberPage}}</div>

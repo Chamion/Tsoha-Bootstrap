@@ -7,7 +7,7 @@
 
     <title>
       {% block title %}
-        Tietokantasovellus
+        HS-bookkeeping
       {% endblock %}
     </title>
 
@@ -39,11 +39,13 @@
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
             <!-- Navigaation linkit -->
-            <li><a href="{{base_path}}">Login page</a></li>
             <li><a href="{{base_path}}/main">Main page</a></li>
             <li><a href="{{base_path}}/logging">Logging</a></li>
             <li><a href="{{base_path}}/groups">Groups</a></li>
             <li><a href="{{base_path}}/analysis">Analysis</a></li>
+          </ul>
+          <ul class="nav navbar-right">
+              <li><a id="navbarLogout" class="btn btn-default navbar-btn" href="{{base_path}}/logout">Log out</a></li>
           </ul>
         </div>
       </div>

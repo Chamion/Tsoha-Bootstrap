@@ -32,7 +32,12 @@ class GameController extends BaseController {
                 'opponent' => 1
             );
         }
-        View::make('suunnitelmat/kirjaus.html', $_SESSION['gameInput']);
+        $params = array('gameInput' => $_SESSION['gameInput']);
+        if(isset($_SESSION['submit'])){
+            $params['submit'] = $_SESSION['submit'];
+            unset($_SESSION['submit']);
+        }
+        View::make('suunnitelmat/kirjaus.html', $params);
     }
 
     public static function addResult() {
@@ -55,6 +60,7 @@ class GameController extends BaseController {
             'hero' => $_POST['hero'],
             'opponent' => $_POST['opponent']
         );
+        $_SESSION['submit'] = 'submit';
         Redirect::to('/logging');
     }
 
