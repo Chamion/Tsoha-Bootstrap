@@ -6,9 +6,9 @@ class GameController extends BaseController {
         self::check_logged_in();
         $player = $_SESSION['player'];
         $maxGamePage = GameModel::countPagesByPlayer($player);
-        if(!isset($_SESSION['gamePage'])){
+        if (!isset($_SESSION['gamePage'])) {
             $_SESSION['gamePage'] = 1;
-        }else if($_SESSION['gamePage'] > $maxGamePage || $_SESSION['gamePage'] == -1){
+        } else if ($_SESSION['gamePage'] > $maxGamePage || $_SESSION['gamePage'] == -1) {
             $_SESSION['gamePage'] = $maxGamePage;
         }
         $games = GameModel::findByPlayer($player, $_SESSION['gamePage']);
@@ -33,7 +33,7 @@ class GameController extends BaseController {
             );
         }
         $params = array('gameInput' => $_SESSION['gameInput']);
-        if(isset($_SESSION['submit'])){
+        if (isset($_SESSION['submit'])) {
             $params['submit'] = $_SESSION['submit'];
             unset($_SESSION['submit']);
         }
@@ -70,14 +70,14 @@ class GameController extends BaseController {
             'group' => $_POST['group'],
             'class' => $_POST['class']
         );
-        if(isset($_POST['legend'])){
+        if (isset($_POST['legend'])) {
             $_SESSION['statsInput']['legend'] = 1;
-        } else{
+        } else {
             $_SESSION['statsInput']['legend'] = 0;
         }
-        if(isset($_POST['mirror'])){
+        if (isset($_POST['mirror'])) {
             $_SESSION['statsInput']['mirror'] = 1;
-        } else{
+        } else {
             $_SESSION['statsInput']['mirror'] = 0;
         }
         if ($_SESSION['statsInput']['group'] == 'custom') {
@@ -144,7 +144,7 @@ class GameController extends BaseController {
     public static function editPage() {
         View::make('pages/edit.html', $_SESSION['gameInput']);
     }
-    
+
     public static function editSave() {
         self::check_logged_in();
         $player = $_SESSION['player'];
@@ -168,17 +168,18 @@ class GameController extends BaseController {
         unset($_SESSION['gameId']);
         Redirect::to('/logging/list');
     }
-    
-    public static function removeFlipPage(){
-        if($_POST['button'] == 'first'){
+
+    public static function removeFlipPage() {
+        if ($_POST['button'] == 'first') {
             $_SESSION['gamePage'] = 1;
-        }else if($_POST['button'] == 'previous'){
+        } else if ($_POST['button'] == 'previous') {
             $_SESSION['gamePage'] = $_SESSION['gamePage'] - 1;
-        }else if($_POST['button'] == 'next'){
+        } else if ($_POST['button'] == 'next') {
             $_SESSION['gamePage'] = $_SESSION['gamePage'] + 1;
-        }else {
+        } else {
             $_SESSION['gamePage'] = -1;
         }
         Redirect::to('/logging/list');
     }
+
 }

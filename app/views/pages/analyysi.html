@@ -42,7 +42,7 @@
             <input id="mirrorInput" type="checkbox" name="mirror">
             <span> Use mirrored results.<small><a href="#" data-toggle="tooltip" title="Mirrored results are games played by your opponents against you. When using mirrored results, each game will be intepreted as two results as if you played against yourself."> info</a></small></span>
             <script>
-                $document.ready(function(){
+                $document.ready(function () {
                     $('[data-toggle="tooltip"]').tooltip();
                 });
             </script>
@@ -102,36 +102,36 @@
 <script>
     var group = "{{statsInput['group']}}";
     var id;
-    if(group == 'all'){
+    if (group == 'all') {
         id = 'inputGroupAll';
-    }else if(group == 'me'){
+    } else if (group == 'me') {
         id = 'inputGroupMe';
-    }else{
+    } else {
         id = 'inputGroupCustom';
         show('groups_table');
     }
     document.getElementById(id).setAttribute('checked', 'checked');
-    
+
     var classInput = "{{statsInput['class']}}";
     var classId;
-    if(classInput == 'all'){
+    if (classInput == 'all') {
         classId = 'inputClassAll';
-    }else{
+    } else {
         classId = 'inputClassFor';
         show('hero');
     }
     document.getElementById(classId).setAttribute('checked', 'checked');
-    
-    if(classInput == 'for'){
+
+    if (classInput == 'for') {
         document.getElementById('classHeader').innerHTML = 'Opponent';
         var heroInput = "{{statsInput['hero']}}";
         document.getElementById('hero').value = heroInput;
     }
-    
-    if("{{statsInput['legend']}}" == '1'){
+
+    if ("{{statsInput['legend']}}" == '1') {
         document.getElementById('legendInput').setAttribute('checked', 'checked');
     }
-    if("{{statsInput['mirror']}}" == '1'){
+    if ("{{statsInput['mirror']}}" == '1') {
         document.getElementById('mirrorInput').setAttribute('checked', 'checked');
     }
 </script>

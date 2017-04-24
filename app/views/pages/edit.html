@@ -45,18 +45,18 @@
     <input type="submit" value="Save" class="btn btn-primary">
 </form>
 <script>
-    function set(id, value){
+    function set(id, value) {
         var x = document.getElementById(id);
         x.value = value;
     }
     set('hero', "{{hero}}");
     set('opponent', "{{opponent}}");
-    if("{{win}}" == '1'){
+    if ("{{win}}" == '1') {
         document.getElementById("win").checked = true;
-    }else{
+    } else {
         document.getElementById("loss").checked = true;
     }
-    if("{{legend}}" == '1'){
+    if ("{{legend}}" == '1') {
         document.getElementById("legend").checked = true;
     }
 </script>

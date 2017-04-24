@@ -4,9 +4,9 @@
 <script>
     function toggle(id) {
         var x = document.getElementById(id);
-        if(x.style.display == 'none'){
+        if (x.style.display == 'none') {
             x.style.display = 'block';
-        }else {
+        } else {
             x.style.display = 'none';
         }
     }
@@ -52,11 +52,11 @@
             document.getElementById('yesButton').style.width = '100px';
             document.getElementById('noButton').style.width = '100px';
             hide('noButton');
-            if(document.getElementById('teamClosed').innerHTML == '1'){
+            if (document.getElementById('teamClosed').innerHTML == '1') {
                 document.getElementById('closeIn').disabled = 'disabled';
                 document.getElementById('closeIn').classList.add('btn-primary');
                 document.getElementById('joinId').style.display = 'none';
-            }else{
+            } else {
                 document.getElementById('openIn').disabled = 'disabled';
                 document.getElementById('openIn').classList.add('btn-primary');
             }
@@ -151,21 +151,21 @@
 <script>
     var memberPage = parseInt(document.getElementById('memberPage').innerHTML);
     var maxMemberPage = parseInt(document.getElementById('maxMemberPage').innerHTML);
-    if(memberPage == 1){
+    if (memberPage == 1) {
         document.getElementById('memberFirst').style.display = 'none';
         document.getElementById('memberPrevious').style.display = 'none';
     }
-    if(memberPage == maxMemberPage){
+    if (memberPage == maxMemberPage) {
         document.getElementById('memberNext').style.display = 'none';
         document.getElementById('memberLast').style.display = 'none';
     }
     var inviteePage = parseInt(document.getElementById('inviteePage').innerHTML);
     var maxInviteePage = parseInt(document.getElementById('maxInviteePage').innerHTML);
-    if(inviteePage == 1){
+    if (inviteePage == 1) {
         document.getElementById('inviteeFirst').style.display = 'none';
         document.getElementById('inviteePrevious').style.display = 'none';
     }
-    if(inviteePage == maxInviteePage){
+    if (inviteePage == maxInviteePage) {
         document.getElementById('inviteeNext').style.display = 'none';
         document.getElementById('inviteeLast').style.display = 'none';
     }

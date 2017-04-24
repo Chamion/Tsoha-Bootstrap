@@ -10,7 +10,7 @@
 </div>
 <script>
     var submit = '{{submit}}';
-    if(submit == 'submit'){
+    if (submit == 'submit') {
         document.getElementById('submitAlert').style.display = 'block';
         document.getElementById('submitAlert').style.width = '300px';
     }
@@ -64,18 +64,18 @@
 <br><br>
 <a href="{{base_path}}/main" class="btn btn-default">Back to main page</a>
 <script>
-    function set(id, value){
+    function set(id, value) {
         var x = document.getElementById(id);
         x.value = value;
     }
     set('hero', "{{gameInput['hero']}}");
     set('opponent', "{{gameInput['opponent']}}");
-    if("{{gameInput['win']}}" == '1'){
+    if ("{{gameInput['win']}}" == '1') {
         document.getElementById("win").checked = true;
-    }else{
+    } else {
         document.getElementById("loss").checked = true;
     }
-    if("{{gameInput['legend']}}" == '1'){
+    if ("{{gameInput['legend']}}" == '1') {
         document.getElementById("legend").checked = true;
     }
 </script>

@@ -112,21 +112,21 @@
 <script>
     var teamPage = parseInt(document.getElementById('teamPage').innerHTML);
     var maxTeamPage = parseInt(document.getElementById('maxTeamPage').innerHTML);
-    if(teamPage == 1){
+    if (teamPage == 1) {
         document.getElementById('teamFirst').style.display = 'none';
         document.getElementById('teamPrevious').style.display = 'none';
     }
-    if(teamPage == maxTeamPage){
+    if (teamPage == maxTeamPage) {
         document.getElementById('teamNext').style.display = 'none';
         document.getElementById('teamLast').style.display = 'none';
     }
     var invitePage = parseInt(document.getElementById('invitePage').innerHTML);
     var maxInvitePage = parseInt(document.getElementById('maxInvitePage').innerHTML);
-    if(invitePage == 1){
+    if (invitePage == 1) {
         document.getElementById('inviteFirst').style.display = 'none';
         document.getElementById('invitePrevious').style.display = 'none';
     }
-    if(invitePage == maxInvitePage){
+    if (invitePage == maxInvitePage) {
         document.getElementById('inviteNext').style.display = 'none';
         document.getElementById('inviteLast').style.display = 'none';
     }
@@ -135,11 +135,11 @@
 <a href="{{base_path}}/main" class="btn btn-default">Back to main page</a>
 <script>
     var error = document.getElementById('errorMessage').innerHTML;
-    if(error != ''){
+    if (error != '') {
         document.getElementById('errorAlert').style.display = 'block';
     }
     var error = document.getElementById('joinErrorMessage').innerHTML;
-    if(error != ''){
+    if (error != '') {
         document.getElementById('joinErrorAlert').style.display = 'block';
     }
 </script>

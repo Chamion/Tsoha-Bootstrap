@@ -61,7 +61,7 @@ $routes->post('/groups/group', function() {
 });
 
 $routes->post('/groups/group/kick', function() {
-   TeamController::kick(); 
+    TeamController::kick();
 });
 
 $routes->get('/groups/group/leave', function() {
@@ -100,15 +100,15 @@ $routes->post('/groups/pageflip', function() {
     TeamController::manageSetPage();
 });
 
-$routes->post('/groups/group/pageflip', function(){
+$routes->post('/groups/group/pageflip', function() {
     TeamController::teamSetPage();
 });
 
-$routes->post('/logging/remove', function(){
+$routes->post('/logging/remove', function() {
     GameController::removeFlipPage();
 });
 
-$routes->post('/logging/list/pageflip', function(){
+$routes->post('/logging/list/pageflip', function() {
     GameController::removeFlipPage();
 });
 

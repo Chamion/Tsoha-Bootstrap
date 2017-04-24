@@ -34,7 +34,7 @@
     </div>
 </form>
 <script>
-    if(document.getElementById('usernameIn').getAttribute('value') != ''){
+    if (document.getElementById('usernameIn').getAttribute('value') != '') {
         document.getElementById('loginError').innerHTML = ' Invalid username or password.';
         show('loginAlert');
     }
@@ -68,7 +68,7 @@
 </form>
 <script>
     var error = document.getElementById('errorMessage').innerHTML;
-    if(error.length != ''){
+    if (error.length != '') {
         show('errorAlert');
         show('register');
     }
