@@ -101,6 +101,9 @@ class TeamModel extends BaseModel{
     
     public function validateGroupName(){
         $errors = array();
+        if(strlen($this->groupName) > 32){
+            $errors[] = 'Group name must be 32 characters or shorter.';
+        }
         return $this->validate_string($this->groupName, $errors);
     }
     
@@ -136,7 +139,10 @@ class TeamModel extends BaseModel{
     
     public static function joinOpen($player, $team){
         if(!ctype_digit($team)){
-            return 'Input must be an integer.';
+            return 'Input must be a positive integer.';
+        }
+        if($team < 1 || $team > 2147483647){
+            return 'Input must be a valid join ID';
         }
         if(self::findById($team) == null){
             return 'No group found for the specified ID.';
