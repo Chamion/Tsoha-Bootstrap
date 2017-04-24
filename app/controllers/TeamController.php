@@ -34,7 +34,7 @@ class TeamController extends BaseController{
             $params['joinError'] = $_SESSION['joinError'];
             unset($_SESSION['joinError']);
         }
-        View::make('suunnitelmat/ryhmat.html', $params);
+        View::make('pages/ryhmat.html', $params);
     }
     
     public static function create(){
@@ -81,12 +81,12 @@ class TeamController extends BaseController{
             'memberPage' => $_SESSION['memberPage'],
             'maxMemberPage' => $maxMemberPage);
         if($player == $team->leader){
-            $path = 'suunnitelmat/ryhma1.html';
+            $path = 'pages/ryhma1.html';
             $params['invites'] = PlayerModel::findByInvite($team->id, $_SESSION['inviteePage']);
             $params['inviteePage'] = $_SESSION['inviteePage'];
             $params['maxInviteePage'] = $maxInviteePage;
         }else{
-            $path = 'suunnitelmat/ryhma2.html';
+            $path = 'pages/ryhma2.html';
         }
         View::make($path, $params);
     }

@@ -44,26 +44,19 @@
     </div>
     <input type="submit" value="Save" class="btn btn-primary">
 </form>
-<div hidden>
-    <!--Hirveä hakkaus, jolla saadaan parametrit luettua javascriptin sisällä.-->
-    <p id="heroIn" title="{{hero}}"></p>
-    <p id="opponentIn" title="{{opponent}}"></p>
-    <p id="winIn" title="{{win}}"></p>
-    <p id="legendIn" title="{{legend}}"></p>
-</div>
 <script>
     function set(id, value){
         var x = document.getElementById(id);
         x.value = value;
     }
-    set('hero', document.getElementById('heroIn').getAttribute('title'));
-    set('opponent', document.getElementById('opponentIn').getAttribute('title'));
-    if(document.getElementById("winIn").getAttribute('title') == 1){
+    set('hero', "{{hero}}");
+    set('opponent', "{{opponent}}");
+    if("{{win}}" == '1'){
         document.getElementById("win").checked = true;
     }else{
         document.getElementById("loss").checked = true;
     }
-    if(document.getElementById("legendIn").getAttribute('title') == 1){
+    if("{{legend}}" == '1'){
         document.getElementById("legend").checked = true;
     }
 </script>

@@ -63,26 +63,19 @@
 <a href="{{base_path}}/logging/list" class="btn btn-danger">Remove/Edit logged results</a>
 <br><br>
 <a href="{{base_path}}/main" class="btn btn-default">Back to main page</a>
-<div hidden>
-    <!--Hirveä hakkaus, jolla saadaan parametrit luettua javascriptin sisällä.-->
-    <p id="heroIn" title="{{gameInput['hero']}}"></p>
-    <p id="opponentIn" title="{{gameInput['opponent']}}"></p>
-    <p id="winIn" title="{{gameInput['win']}}"></p>
-    <p id="legendIn" title="{{gameInput['legend']}}"></p>
-</div>
 <script>
     function set(id, value){
         var x = document.getElementById(id);
         x.value = value;
     }
-    set('hero', document.getElementById('heroIn').getAttribute('title'));
-    set('opponent', document.getElementById('opponentIn').getAttribute('title'));
-    if(document.getElementById("winIn").getAttribute('title') == 1){
+    set('hero', "{{gameInput['hero']}}");
+    set('opponent', "{{gameInput['opponent']}}");
+    if("{{gameInput['win']}}" == '1'){
         document.getElementById("win").checked = true;
     }else{
         document.getElementById("loss").checked = true;
     }
-    if(document.getElementById("legendIn").getAttribute('title') == 1){
+    if("{{gameInput['legend']}}" == '1'){
         document.getElementById("legend").checked = true;
     }
 </script>

@@ -12,7 +12,7 @@ class GameController extends BaseController {
             $_SESSION['gamePage'] = $maxGamePage;
         }
         $games = GameModel::findByPlayer($player, $_SESSION['gamePage']);
-        View::make('suunnitelmat/poista.html', array('games' => $games, 'gamePage' => $_SESSION['gamePage'], 'maxGamePage' => $maxGamePage));
+        View::make('pages/poista.html', array('games' => $games, 'gamePage' => $_SESSION['gamePage'], 'maxGamePage' => $maxGamePage));
     }
 
     public static function remove() {
@@ -37,7 +37,7 @@ class GameController extends BaseController {
             $params['submit'] = $_SESSION['submit'];
             unset($_SESSION['submit']);
         }
-        View::make('suunnitelmat/kirjaus.html', $params);
+        View::make('pages/kirjaus.html', $params);
     }
 
     public static function addResult() {
@@ -131,7 +131,7 @@ class GameController extends BaseController {
                 $stats = GameModel::matchupGroupStats($_SESSION['statsInput']['groupIds'], $_SESSION['statsInput']['hero'], $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             }
         }
-        View::make('suunnitelmat/analyysi.html', array('stats' => $stats, 'groups' => $allGroups, 'statsInput' => $_SESSION['statsInput']));
+        View::make('pages/analyysi.html', array('stats' => $stats, 'groups' => $allGroups, 'statsInput' => $_SESSION['statsInput']));
     }
 
     public static function editInit() {
@@ -142,7 +142,7 @@ class GameController extends BaseController {
     }
 
     public static function editPage() {
-        View::make('suunnitelmat/edit.html', $_SESSION['gameInput']);
+        View::make('pages/edit.html', $_SESSION['gameInput']);
     }
     
     public static function editSave() {

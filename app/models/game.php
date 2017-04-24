@@ -48,6 +48,20 @@ class GameModel extends BaseModel {
         $query = DB::connection()->prepare('INSERT INTO Game (player, legend, win, hero, opponent) VALUES (:player, :legend, :win, :hero, :opponent);');
         $query->execute(array('player' => $player, 'legend' => $legend, 'win' => $win, 'hero' => $hero, 'opponent' => $opponent));
     }
+    
+    public static function collectStats($query, $matchup){
+        if($matchup){
+            $key = 'opponent';
+        }else{
+            $key = 'hero';
+        }
+        $rows = $query->fetchAll();
+        $stats = array();
+        foreach ($rows as $row) {
+            $stats[] = new Stats($row[$key], $row['winrate'], $row['sample']);
+        }
+        return $stats;
+    }
 
     public static function generalPrivateStats($player, $legend = 0, $mirror = true) {
         if($mirror){
@@ -56,13 +70,7 @@ class GameModel extends BaseModel {
             $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game WHERE player = :player AND (legend OR :legend = 0) GROUP BY Game.hero ORDER BY Game.hero;');
         }
         $query->execute(array('player' => $player, 'legend' => $legend));
-        $rows = $query->fetchAll();
-
-        $stats = array();
-        foreach ($rows as $row) {
-            $stats[] = new Stats($row['hero'], $row['winrate'], $row['sample']);
-        }
-        return $stats;
+        return self::collectStats($query, false);
     }
 
     public static function generalGroupStats($groups, $legend = 0, $mirror = true) {
@@ -80,12 +88,7 @@ class GameModel extends BaseModel {
         }
         $query = DB::connection()->prepare($statement);
         $query->execute(array('legend' => $legend));
-        $rows = $query->fetchAll();
-        $stats = array();
-        foreach ($rows as $row) {
-            $stats[] = new Stats($row['hero'], $row['winrate'], $row['sample']);
-        }
-        return $stats;
+        return self::collectStats($query, false);
     }
     
     public static function matchupPrivateStats($player, $hero, $legend = 0, $mirror = true) {
@@ -95,13 +98,7 @@ class GameModel extends BaseModel {
             $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE (Game.legend OR :legend = 0) AND player = :player AND Game.hero = :hero GROUP BY Game.opponent ORDER BY Game.opponent');
         }
         $query->execute(array('player' => $player, 'hero' => $hero, 'legend' => $legend));
-        $rows = $query->fetchAll();
-
-        $stats = array();
-        foreach ($rows as $row) {
-            $stats[] = new Stats($row['opponent'], $row['winrate'], $row['sample']);
-        }
-        return $stats;
+        return self::collectStats($query, true);
     }
     
     public static function matchupGroupStats($groups, $hero, $legend = 0, $mirror = true){
@@ -119,12 +116,7 @@ class GameModel extends BaseModel {
         }
         $query = DB::connection()->prepare($statement);
         $query->execute(array('hero' => $hero, 'legend' => $legend));
-        $rows = $query->fetchAll();
-        $stats = array();
-        foreach ($rows as $row) {
-            $stats[] = new Stats($row['opponent'], $row['winrate'], $row['sample']);
-        }
-        return $stats;
+        return self::collectStats($query, true);
     }
     
     public static function update($id, $player, $legend, $win, $hero, $opponent) {

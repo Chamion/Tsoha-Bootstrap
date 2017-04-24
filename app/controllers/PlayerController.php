@@ -13,7 +13,7 @@ class PlayerController extends BaseController{
             $params['usernameInput'] = $_SESSION['usernameInput'];
             unset($_SESSION['usernameInput']);
         }
-        View::make('suunnitelmat/etusivu.html', $params);
+        View::make('pages/etusivu.html', $params);
     }
     
     public static function login(){
@@ -50,7 +50,7 @@ class PlayerController extends BaseController{
     public static function navPage(){
         self::check_logged_in();
         $player = self::get_user_logged_in();
-        View::make('suunnitelmat/paasivu.html', array('player' => $player));
+        View::make('pages/paasivu.html', array('player' => $player));
     }
     
     public static function logout(){
