@@ -1,6 +1,4 @@
-# Tietokantasovelluksen esittelysivu
-
-Yleisiä linkkejä:
+## Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](https://jemisalo.users.cs.helsinki.fi/HS-bookkeeping)
 * [Linkki dokumentaatiooni](/doc/dokumentaatio.pdf)
@@ -14,3 +12,4 @@ Hearthstone-pelin pelaajille kirjanpitoapuväline, joka auttaa kirjaamaan pelien
 
 ### Merkintöjä
 * Testauskäyttöön on käyttäjät "testaaja" ja "testaaja2" molempien salasana on "testi123".
+* Tiedetty ongelma: Mirrored results tooltip ei näy mobiiliselaimissa.
