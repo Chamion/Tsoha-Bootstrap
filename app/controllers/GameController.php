@@ -70,6 +70,16 @@ class GameController extends BaseController {
             'group' => $_POST['group'],
             'class' => $_POST['class']
         );
+        if(isset($_POST['legend'])){
+            $_SESSION['statsInput']['legend'] = 1;
+        } else{
+            $_SESSION['statsInput']['legend'] = 0;
+        }
+        if(isset($_POST['mirror'])){
+            $_SESSION['statsInput']['mirror'] = 1;
+        } else{
+            $_SESSION['statsInput']['mirror'] = 0;
+        }
         if ($_SESSION['statsInput']['group'] == 'custom') {
             $_SESSION['statsInput']['groupIds'] = array();
             foreach (TeamModel::findByMember($_SESSION['player'], 1) as $team) {
@@ -89,7 +99,9 @@ class GameController extends BaseController {
         if ($_SESSION['statsInput'] == null) {
             $_SESSION['statsInput'] = array(
                 'group' => 'all',
-                'class' => 'all'
+                'class' => 'all',
+                'legend' => 0,
+                'mirror' => 0
             );
         }
         $player = $_SESSION['player'];
@@ -100,11 +112,11 @@ class GameController extends BaseController {
                 foreach ($allGroups as $group) {
                     $groupIds[] = $group->id;
                 }
-                $stats = GameModel::generalGroupStats($groupIds);
+                $stats = GameModel::generalGroupStats($groupIds, $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             } else if ($_SESSION['statsInput']['group'] == 'me') {
-                $stats = GameModel::generalPrivateStats($player);
+                $stats = GameModel::generalPrivateStats($player, $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             } else {
-                $stats = GameModel::generalGroupStats($_SESSION['statsInput']['groupIds']);
+                $stats = GameModel::generalGroupStats($_SESSION['statsInput']['groupIds'], $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             }
         } else if ($_SESSION['statsInput']['class'] == 'for') {
             if ($_SESSION['statsInput']['group'] == 'all') {
@@ -112,11 +124,11 @@ class GameController extends BaseController {
                 foreach ($allGroups as $group) {
                     $groupIds[] = $group->id;
                 }
-                $stats = GameModel::matchupGroupStats($groupIds, $_SESSION['statsInput']['hero']);
+                $stats = GameModel::matchupGroupStats($groupIds, $_SESSION['statsInput']['hero'], $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             } else if ($_SESSION['statsInput']['group'] == 'me') {
-                $stats = GameModel::matchupPrivateStats($player, $_SESSION['statsInput']['hero']);
+                $stats = GameModel::matchupPrivateStats($player, $_SESSION['statsInput']['hero'], $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             } else {
-                $stats = GameModel::matchupGroupStats($_SESSION['statsInput']['groupIds'], $_SESSION['statsInput']['hero']);
+                $stats = GameModel::matchupGroupStats($_SESSION['statsInput']['groupIds'], $_SESSION['statsInput']['hero'], $_SESSION['statsInput']['legend'], $_SESSION['statsInput']['mirror'] == 1);
             }
         }
         View::make('suunnitelmat/analyysi.html', array('stats' => $stats, 'groups' => $allGroups, 'statsInput' => $_SESSION['statsInput']));

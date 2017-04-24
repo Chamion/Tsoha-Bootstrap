@@ -49,9 +49,13 @@ class GameModel extends BaseModel {
         $query->execute(array('player' => $player, 'legend' => $legend, 'win' => $win, 'hero' => $hero, 'opponent' => $opponent));
     }
 
-    public static function generalPrivateStats($player) {
-        $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game WHERE player = :player GROUP BY Game.hero ORDER BY Game.hero');
-        $query->execute(array('player' => $player));
+    public static function generalPrivateStats($player, $legend = 0, $mirror = true) {
+        if($mirror){
+            $query = DB::connection()->prepare('SELECT 100*(COALESCE(j1.wins, 0)+COALESCE(j2.wins, 0))/(COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0)) AS winrate, COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0) AS sample, COALESCE(j1.hero, j2.hero) AS hero FROM (SELECT count(CASE WHEN win THEN 1 END) AS wins, COUNT(win) AS sample, Game.hero AS hero FROM Game WHERE player = :player AND (legend OR :legend = 0) GROUP BY Game.hero ORDER BY Game.hero) j1 FULL JOIN (SELECT count(CASE WHEN NOT win THEN 1 END) AS wins, COUNT(win) AS sample, Game.opponent AS hero FROM Game WHERE player = :player AND (legend OR :legend = 0) GROUP BY Game.opponent ORDER BY Game.opponent) j2 ON (j1.hero = j2.hero);');
+        } else {
+            $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game WHERE player = :player AND (legend OR :legend = 0) GROUP BY Game.hero ORDER BY Game.hero;');
+        }
+        $query->execute(array('player' => $player, 'legend' => $legend));
         $rows = $query->fetchAll();
 
         $stats = array();
@@ -61,7 +65,7 @@ class GameModel extends BaseModel {
         return $stats;
     }
 
-    public static function generalGroupStats($groups) {
+    public static function generalGroupStats($groups, $legend = 0, $mirror = true) {
         $stringForm = '(';
         foreach ($groups as $group) {
             $stringForm = $stringForm . $group . ',';
@@ -69,9 +73,13 @@ class GameModel extends BaseModel {
         $stringForm = $stringForm . '0)';
         //stringForm upotetaan suoraan statement:tiin, jotta kielletty merkki ',' ei sensuroidu. Hirveä hakkaus, mutta toimii.
         //stringForm ei sisällä käyttäjän kirjoittamaa syötettä, joten injektiovaaraa ei ole.
-        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game WHERE Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.hero ORDER BY Game.hero';
+        if($mirror){
+            $statement = 'SELECT 100*(COALESCE(j1.wins, 0)+COALESCE(j2.wins, 0))/(COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0)) AS winrate, COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0) AS sample, COALESCE(j1.hero, j2.hero) AS hero FROM (SELECT count(CASE WHEN win THEN 1 END) AS wins, COUNT(win) AS sample, Game.hero FROM Game WHERE (Game.legend OR :legend = 0) AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.hero ORDER BY Game.hero) j1 FULL JOIN (SELECT count(CASE WHEN NOT win THEN 1 END) AS wins, COUNT(win) AS sample, Game.opponent AS hero FROM Game WHERE (Game.legend OR :legend = 0) AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.opponent ORDER BY Game.opponent) j2 ON (j1.hero = j2.hero);';
+        }else{
+            $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.hero FROM Game WHERE (Game.legend OR :legend = 0) AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.hero ORDER BY Game.hero';
+        }
         $query = DB::connection()->prepare($statement);
-        $query->execute();
+        $query->execute(array('legend' => $legend));
         $rows = $query->fetchAll();
         $stats = array();
         foreach ($rows as $row) {
@@ -80,9 +88,13 @@ class GameModel extends BaseModel {
         return $stats;
     }
     
-    public static function matchupPrivateStats($player, $hero) {
-        $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE player = :player AND Game.hero = :hero GROUP BY Game.opponent ORDER BY Game.opponent');
-        $query->execute(array('player' => $player, 'hero' => $hero));
+    public static function matchupPrivateStats($player, $hero, $legend = 0, $mirror = true) {
+        if($mirror){
+            $query = DB::connection()->prepare('SELECT 100*(COALESCE(j1.wins, 0)+COALESCE(j2.wins, 0))/(COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0)) AS winrate, COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0) AS sample, COALESCE(j1.opponent, j2.opponent) AS opponent FROM (SELECT count(CASE WHEN win THEN 1 END) AS wins, COUNT(win) AS sample, Game.opponent FROM Game WHERE (Game.legend OR :legend = 0) AND player = :player AND Game.hero = :hero GROUP BY Game.opponent ORDER BY Game.opponent) j1 FULL JOIN (SELECT count(CASE WHEN NOT win THEN 1 END) AS wins, COUNT(win) AS sample, Game.hero AS opponent FROM Game WHERE (Game.legend OR :legend = 0) AND player = :player AND Game.opponent = :hero GROUP BY Game.hero ORDER BY Game.hero) j2 ON (j1.opponent = j2.opponent);');
+        } else {
+            $query = DB::connection()->prepare('SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE (Game.legend OR :legend = 0) AND player = :player AND Game.hero = :hero GROUP BY Game.opponent ORDER BY Game.opponent');
+        }
+        $query->execute(array('player' => $player, 'hero' => $hero, 'legend' => $legend));
         $rows = $query->fetchAll();
 
         $stats = array();
@@ -92,7 +104,7 @@ class GameModel extends BaseModel {
         return $stats;
     }
     
-    public static function matchupGroupStats($groups, $hero){
+    public static function matchupGroupStats($groups, $hero, $legend = 0, $mirror = true){
         $stringForm = '(';
         foreach ($groups as $group) {
             $stringForm = $stringForm . $group . ',';
@@ -100,9 +112,13 @@ class GameModel extends BaseModel {
         $stringForm = $stringForm . '0)';
         //stringForm upotetaan suoraan statement:tiin, jotta kielletty merkki ',' ei sensuroidu. Hirveä hakkaus, mutta toimii.
         //stringForm ei sisällä käyttäjän kirjoittamaa syötettä, joten injektiovaaraa ei ole.
-        $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE Game.hero = :hero AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.opponent ORDER BY Game.opponent';
+        if($mirror){
+            $statement = 'SELECT 100*(COALESCE(j1.wins, 0)+COALESCE(j2.wins, 0))/(COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0)) AS winrate, COALESCE(j1.sample, 0)+COALESCE(j2.sample, 0) AS sample, COALESCE(j1.opponent, j2.opponent) AS opponent FROM (SELECT count(CASE WHEN win THEN 1 END) AS wins, COUNT(win) AS sample, Game.opponent AS opponent FROM Game WHERE (Game.legend OR :legend = 0) AND Game.hero = :hero AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.opponent ORDER BY Game.opponent) j1 FULL JOIN (SELECT count(CASE WHEN NOT win THEN 1 END) AS wins, COUNT(win) AS sample, Game.hero AS opponent FROM Game WHERE (Game.legend OR :legend = 0) AND Game.opponent = :hero AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.hero ORDER BY Game.hero) j2 ON (j1.opponent = j2.opponent);';
+        } else {
+            $statement = 'SELECT 100*count(CASE WHEN win THEN 1 END)/COUNT(win) AS winrate, COUNT(win) AS sample, Game.opponent FROM Game WHERE (Game.legend OR :legend = 0) AND Game.hero = :hero AND Game.player IN (SELECT player FROM Membership WHERE team IN ' . $stringForm . ' AND accepted) GROUP BY Game.opponent ORDER BY Game.opponent';
+        }
         $query = DB::connection()->prepare($statement);
-        $query->execute(array('hero' => $hero));
+        $query->execute(array('hero' => $hero, 'legend' => $legend));
         $rows = $query->fetchAll();
         $stats = array();
         foreach ($rows as $row) {
